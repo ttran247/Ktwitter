@@ -1,0 +1,13 @@
+#entryContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#infoContainer {
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 12px;
+  color: rgb(100, 100, 100);
+}
