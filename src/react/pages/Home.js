@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "../components";
+import { Menu, NewMessageEntry } from "../components";
 import { userIsAuthenticated } from "../HOCs";
 
 class Home extends React.Component {
@@ -8,6 +8,7 @@ class Home extends React.Component {
       <>
         <Menu isAuthenticated={this.props.isAuthenticated} />
         <h2>Home</h2>
+        <NewMessageEntry />
       </>
     );
   }
