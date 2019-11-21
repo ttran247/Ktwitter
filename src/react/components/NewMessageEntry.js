@@ -30,7 +30,7 @@ class NewMessageEntry extends React.Component {
         />
         <div id="infoContainer">
           {typedChars}/140 characters
-          <button className="ui primary button">Post</button>
+          <button className="ui primary button">Tweet</button>
         </div>
       </div>
     );
