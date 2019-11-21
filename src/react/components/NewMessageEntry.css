@@ -1,0 +1,20 @@
+#entryContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border box;  
+  border: 1px solid black;
+  width: 3000px;  
+  height: 1000px;
+  margin-top: 20px;
+}
+
+#infoContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  justify-content: space-around;
+  font-size: 12px;
+  color: rgb(100, 100, 100);
+}

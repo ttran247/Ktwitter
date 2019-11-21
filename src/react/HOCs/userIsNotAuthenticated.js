@@ -3,7 +3,7 @@ import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 const userIsNotAuthenticated = connectedRouterRedirect({
   // This sends the user either to the query param route if we have one, or to the landing page if none is specified and the user is already logged in
   redirectPath: (state, ownProps) =>
-    `/profile/${state.auth &&
+    `/home/${state.auth &&
       state.auth.login &&
       state.auth.login.result &&
       state.auth.login.result.username}`,
