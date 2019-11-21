@@ -1,18 +1,22 @@
 import React from "react";
 import { Menu } from "../components";
 import { userIsAuthenticated } from "../HOCs";
+import {UserCard} from "../components"
+// import "./Profile.css";
+
 
 class Profile extends React.Component {
   render() {
     return (
-      <>
-        <h2>Profile</h2>
-        <div id="container">
+      <React.Fragment>
           <Menu isAuthenticated={this.props.isAuthenticated} />
-        </div>
-      </>
+      
+          <UserCard/>
+         
+      </React.Fragment>
     );
   }
 }
 
 export default userIsAuthenticated(Profile);
+
