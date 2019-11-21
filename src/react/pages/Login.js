@@ -1,14 +1,15 @@
 import React from "react";
 import { LoginForm, Menu } from "../components";
 import { userIsNotAuthenticated } from "../HOCs";
-
+import "./Login.css"
 class Login extends React.Component {
   render() {
     return (
       <>
-        <Menu />
-        <h2>Your favorite microblogging platform</h2>
+        <h2>Sign In</h2>
+        <div id="background">
         <LoginForm />
+        </div>
       </>
     );
   }

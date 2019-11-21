@@ -1,14 +1,17 @@
 import React from "react";
 import { Menu, NewMessageEntry } from "../components";
 import { userIsAuthenticated } from "../HOCs";
+import "./Home.css";
 
 class Home extends React.Component {
   render() {
     return (
       <>
-        <Menu isAuthenticated={this.props.isAuthenticated} />
         <h2>Home</h2>
-        <NewMessageEntry />
+        <div id="container">
+          <Menu isAuthenticated={this.props.isAuthenticated} />
+          <NewMessageEntry />
+        </div>
       </>
     );
   }

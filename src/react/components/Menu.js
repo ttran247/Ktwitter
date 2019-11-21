@@ -11,14 +11,15 @@ class Menu extends React.Component {
 
   render() {
     return (
+
       <div id="menu">
-        <h1>Kwitter</h1>
+        <img src={"./logo/Kenzielogo.png"} />
         {this.props.isAuthenticated && (
           <div id="menu-links">
-            <Link to="/home/:username">Home</Link>
-            <Link to="/profile/:username">Profile</Link>
+            <Link to="/home/:username"> <i class="fas fa-home "></i> Home</Link>
+            <Link to="/profile/:username"><i class="fas fa-user-circle"></i>Profile</Link>
             <Link to="/" onClick={this.handleLogout}>
-              Logout
+            <i class="fas fa-door-closed"></i> Logout
             </Link>
           </div>
         )}
