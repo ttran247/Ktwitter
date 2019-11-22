@@ -1,7 +1,6 @@
 // components from own project
 export { default as LoginForm } from "./LoginForm";
 export { default as Menu } from "./Menu";
-export { default as UserCard } from "./UserCard";
 export { default as CardExampleCard } from "./UserCardNew"
 export { default as FeedExampleContentDate } from "./ProfileFeed"
 export { default as NewMessageEntry } from "./NewMessageEntry";
