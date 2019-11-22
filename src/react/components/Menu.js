@@ -38,7 +38,7 @@ class Menu extends React.Component {
               <Link to="/">
                 <Icon name="edit" color="teal" size="large" />
                 <br />
-                Login
+                Log In
               </Link>
               <Link to="/register">
                 <Icon name="globe" color="teal" size="large" />
