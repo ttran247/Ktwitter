@@ -1,38 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap");
+
 #menu {
   border-width: 1px;
   display: flex;
   flex-direction: column;
-  padding: 0 1em;
-  margin-left: none;
-  
-  
-
-
+  background-color: #00356b;
 }
 
 #menu-links {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
-  padding-left: 2em;
-  padding-right: 1em;
-  font-family: Helvetica neue;
-  font-size: 25px;  
+  align-items: center;
+  font-family: "Josefin Sans";
+  text-align: center;
+  font-size: 20px;
 }
 
 #menu-links a {
-  padding-right: 0.5em;
-  color: 00356B;
-  cursor: pointer;
-  margin: 20%;
-  font-family: Helvetica neue;
+  margin: 15% 0 15% 0;
+  width: 100%;
+  font-family: "Josefin Sans";
   font-weight: bold;
-
-
-
-
+  color: rgb(0, 158, 158);
 }
-i{
-  color: black;
 
+#menu-links a:hover {
+  cursor: pointer;
+  border-right: 5px solid #a6ffdc;
+  padding-left: 5px;
+}
+
+#logo {
+  background-image: url("../../img/kenzie-logo.png");
+  background-size: cover;
+  background-color: white;
+  padding-bottom: 10px;
+  width: 130px;
+  height: 130px;
 }
