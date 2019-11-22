@@ -12,29 +12,32 @@ const fakeUser =
     "googleId": "fakeman25@gmail.com"
   }
 
+  class UserCard extends React.Component {
+      state = {
+          
+      }
+      
+      render (){
+      return (
+          <React.Fragment>
+      <div id="profilePage">
+          <div id= "userCard">
+              <div id="cardText">
+                  <h3>{fakeUser.displayName}</h3>
+                  <p>{fakeUser.about}</p>
+              </div>
+              <div id="photoButton">
+                  <img src={fakeUser.pictureLocation}/>
+                  <button>Change Profile Photo</button>
+              </div>
+          </div>
+      </div>
+      </React.Fragment>
+      )}
+  }
+  
+  export default UserCard;
+  
+  
+  
 
-class UserCard extends React.Component {
-    state = {
-        
-    }
-    
-    render (){
-    return (
-        <React.Fragment>
-    <div id="profilePage">
-        <div id= "userCard">
-            <div id="cardText">
-                <h3>{fakeUser.displayName}</h3>
-                <p>{fakeUser.about}</p>
-            </div>
-            <div id="photoButton">
-                <img src={fakeUser.pictureLocation}/>
-                <button>Change Profile Photo</button>
-            </div>
-        </div>
-    </div>
-    </React.Fragment>
-    )}
-}
-
-export default UserCard;
