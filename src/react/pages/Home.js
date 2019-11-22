@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, NewMessageEntry } from "../components";
+import { Menu, NewMessageEntry, MessageList } from "../components";
 import { userIsAuthenticated } from "../HOCs";
 import "./Home.css";
 
@@ -11,6 +11,7 @@ class Home extends React.Component {
         <div id="container">
           <Menu isAuthenticated={this.props.isAuthenticated} />
           <NewMessageEntry />
+          <MessageList />
         </div>
       </>
     );
