@@ -1,4 +1,4 @@
-import { GET_USER } from "../actionTypes";
+import { GET_USER } from "../../actionTypes";
 
 const initialState = {
   user: null,
@@ -6,7 +6,7 @@ const initialState = {
   error: null
 };
 
-export const getUserReducer = (state = initialState, action) => {
+export default getCurrentUser = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER.START:
       console.log("We've started getting user data");
@@ -16,7 +16,10 @@ export const getUserReducer = (state = initialState, action) => {
       };
     case GET_USER.SUCCESS:
       console.log("We've got a user object!");
-      return Object.assign({}, action.paylod, { loading: false });
+      return {
+        user: action.payload,
+        loading: false
+      };
     case GET_USER.FAIL:
       console.log("We couldn't get a user");
       return {

@@ -12,8 +12,8 @@ class Menu extends React.Component {
   render() {
     return (
       <div id="menu">
-        <img src={"./logo/Kenzielogo.png"} />
-        {this.props.isAuthenticated && (
+        <img src={"./logo/Kenzielogo.png"} alt="" />
+        {this.props.isAuthenticated ? (
           <div id="menu-links">
             <Link to="/home/:username">
               {" "}
@@ -25,6 +25,11 @@ class Menu extends React.Component {
             <Link to="/" onClick={this.handleLogout}>
               <i className="fas fa-door-closed" alt=""></i> Logout
             </Link>
+          </div>
+        ) : (
+          <div id="menu-links">
+            <Link to="/">Login</Link>
+            <Link to="/register">Sign Up!</Link>
           </div>
         )}
       </div>
