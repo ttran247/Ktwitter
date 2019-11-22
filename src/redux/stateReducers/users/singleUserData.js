@@ -6,7 +6,7 @@ const initialState = {
   error: null
 };
 
-export default getCurrentUser = (state = initialState, action) => {
+export const getCurrentUser = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER.START:
       console.log("We've started getting user data");
