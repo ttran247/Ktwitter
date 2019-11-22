@@ -1,9 +1,9 @@
 import React from "react";
 import { Menu } from "../components";
 import { userIsAuthenticated } from "../HOCs";
-import {UserCard} from "../components"
-// import "./Profile.css";
-
+import {CardExampleCard} from "../components";
+import {FeedExampleContentDate} from "../components"
+import {ProfileNav} from "../components"
 
 class Profile extends React.Component {
   render() {
@@ -11,8 +11,9 @@ class Profile extends React.Component {
       <React.Fragment>
           <Menu isAuthenticated={this.props.isAuthenticated} />
       
-          <UserCard/>
-         
+          <CardExampleCard/>
+          <ProfileNav/>
+          <FeedExampleContentDate/>
       </React.Fragment>
     );
   }
