@@ -1,1 +1,1 @@
-export { default as currentUser } from "./singleUserData";
+export { getCurrentUser } from "./singleUserData";
