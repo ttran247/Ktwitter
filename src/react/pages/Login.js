@@ -1,8 +1,8 @@
 import React from "react";
-import { LoginForm, Menu } from "../components";
+import { LoginForm, Menu, PageHeader } from "../components";
 import { userIsNotAuthenticated } from "../HOCs";
-import "./Login.css";
 import { Icon } from "semantic-ui-react";
+import "./Login.css";
 
 class Login extends React.Component {
   render() {
@@ -10,10 +10,7 @@ class Login extends React.Component {
       <>
         <Menu />
         <div id="loginContent">
-          <div id="loginHeader">
-            <h1>Kwitter</h1>
-            <h4>Log In Below</h4>
-          </div>
+          <PageHeader title="Kwitter" tagLine="Log In" />
           <div id="loginFormContainer">
             <LoginForm />
           </div>

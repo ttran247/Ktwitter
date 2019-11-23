@@ -6,7 +6,8 @@ export { default as FeedExampleContentDate } from "./ProfileFeed";
 export { default as NewMessageEntry } from "./NewMessageEntry";
 export { default as ProfileNav } from "./ProfileNav";
 export { default as MessageList } from "./MessageList";
-export { default as RegistrationForm } from './RegistrationForm';
+export { default as RegistrationForm } from "./RegistrationForm";
+export { default as PageHeader } from "./PageHeader";
 // components from other packages
 export { Switch, Route, Link } from "react-router-dom";
 export { default as Spinner } from "react-spinkit";
