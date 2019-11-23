@@ -1,6 +1,7 @@
 import React from "react";
-import { Menu } from "../components";
+import { Menu, PageHeader } from "../components";
 import { RegistrationForm } from "../components";
+import "./Registration.css";
 
 class Registration extends React.Component {
   render() {
@@ -8,7 +9,8 @@ class Registration extends React.Component {
       <React.Fragment>
         <Menu />
         <div id="regContainer">
-          <div id="rightForm">
+          <PageHeader title="Kwitter" tagLine="Register For A New Account" />
+          <div id="regFormContainer">
             <RegistrationForm />
           </div>
         </div>
