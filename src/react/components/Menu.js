@@ -18,31 +18,36 @@ class Menu extends React.Component {
           {this.props.isAuthenticated ? (
             <>
               <Link to="/home/:username">
-                <Icon name="home" color="teal" size="large" />
-                <br />
+                <div id="iconSpacer">
+                  <Icon name="home" color="teal" size="large" />
+                </div>
                 Home
               </Link>
               <Link to="/profile/:username">
-                <Icon name="user" color="teal" size="large" />
-                <br />
+                <div id="iconSpacer">
+                  <Icon name="user" color="teal" size="large" />
+                </div>
                 My Profile
               </Link>
               <Link to="/" onClick={this.handleLogout}>
-                <Icon name="arrow left" color="teal" size="large" />
-                <br />
+                <div id="iconSpacer">
+                  <Icon name="arrow left" color="teal" size="large" />
+                </div>
                 Logout
               </Link>
             </>
           ) : (
             <>
               <Link to="/">
-                <Icon name="edit" color="teal" size="large" />
-                <br />
+                <div id="iconSpacer">
+                  <Icon name="edit" color="teal" size="large" />
+                </div>
                 Log In
               </Link>
               <Link to="/register">
-                <Icon name="paper plane" color="teal" size="large" />
-                <br />
+                <div id="iconSpacer">
+                  <Icon name="paper plane" color="teal" size="large" />
+                </div>
                 Register
               </Link>
             </>
