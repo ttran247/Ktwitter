@@ -1,5 +1,12 @@
-#login-form {
+#loginForm {
+  border: 2px solid var(--kenzieBlue);
+  padding: 15px;
   display: flex;
-  flex-direction: column;
-  max-width: 20em;
+  flex-direction: center;
+}
+
+#buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
