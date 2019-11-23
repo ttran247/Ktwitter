@@ -23,7 +23,7 @@ class RegistrationForm extends React.Component {
       email: "",
       username: "",
       password: "",
-      passwordConfirm: ""
+      passwordConfirm: null
     });
   };
 
@@ -35,7 +35,9 @@ class RegistrationForm extends React.Component {
   };
 
   render() {
-    let passwordMatch = this.state.password === this.state.passwordConfirm;
+    let passwordMatch =
+      this.state.passwordConfirm &&
+      this.state.password === this.state.passwordConfirm;
 
     return (
       <div id="regForm">
