@@ -41,7 +41,7 @@ class Menu extends React.Component {
                 Log In
               </Link>
               <Link to="/register">
-                <Icon name="globe" color="teal" size="large" />
+                <Icon name="paper plane" color="teal" size="large" />
                 <br />
                 Register
               </Link>
