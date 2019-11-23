@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button, Icon } from "semantic-ui-react";
+import "./RegistrationForm.css";
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div id="regForm">
         <Form>
           <Form.Field>
             <label htmlFor="firstName">First Name</label>
@@ -83,13 +84,25 @@ class RegistrationForm extends React.Component {
           </Form.Field>
         </Form>
         <div id="buttonGroup">
-          <Button animated color="teal">
+          <Button
+            animated
+            style={{
+              backgroundColor: "var(--kenzieBlue)",
+              color: "var(--kenzieGreen)",
+              width: "30%",
+              textAlign: "center"
+            }}
+          >
             <Button.Content visible>
               <Icon name="check" />
             </Button.Content>
             <Button.Content hidden>Sign Up!</Button.Content>
           </Button>
-          <Button animated color="blue">
+          <Button
+            animated
+            color="red"
+            style={{ color: "white", width: "30%", textAlign: "center" }}
+          >
             <Button.Content visible>
               <Icon name="trash alternate outline" />
             </Button.Content>
@@ -98,7 +111,7 @@ class RegistrationForm extends React.Component {
             </Button.Content>
           </Button>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
