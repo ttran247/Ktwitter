@@ -7,7 +7,6 @@
 
 #regFormContainer {
   width: 60%;
-  height: 100%;
   margin: 20px;
   display: flex;
   flex-direction: column;
