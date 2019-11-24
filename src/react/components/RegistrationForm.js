@@ -1,5 +1,11 @@
 import React from "react";
 import { Form, Button, Icon } from "semantic-ui-react";
+import { withRouter } from "react-router";
+import {
+  domain,
+  jsonHeaders,
+  handleJsonResponse
+} from "../../redux/actionCreators/constants";
 import "./RegistrationForm.css";
 
 class RegistrationForm extends React.Component {
@@ -7,12 +13,13 @@ class RegistrationForm extends React.Component {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
+      displayName: "",
       email: "",
       username: "",
       password: "",
-      passwordConfirm: ""
+      passwordConfirm: "",
+      newUserCreated: false,
+      error: null
     };
   }
 
@@ -23,7 +30,8 @@ class RegistrationForm extends React.Component {
       email: "",
       username: "",
       password: "",
-      passwordConfirm: null
+      passwordConfirm: "",
+      error: null
     });
   };
 
@@ -32,6 +40,79 @@ class RegistrationForm extends React.Component {
     this.setState({
       [stateProp]: event.target.value
     });
+  };
+
+  checkValidInfo = () => {
+    const { username, displayName, password, passwordConfirm } = this.state;
+    if (username.length < 3 || username.length > 20) {
+      this.setState({
+        username: "",
+        error: "Username must be at least 3, and no more than 20 characters."
+      });
+      document.getElementsByName("username")[0].focus();
+      return false;
+    } else if (displayName.length < 3 || displayName.length > 20) {
+      this.setState({
+        displayName: "",
+        error:
+          "Display name must be at least 3, and no more than 20 characters."
+      });
+      document.getElementsByName("displayName")[0].focus();
+      return false;
+    } else if (password.length < 8 || password.length > 20) {
+      this.setState({
+        password: "",
+        passwordConfirm: "",
+        error: "Password must be between 8 and 20 characters."
+      });
+      document.getElementsByName("password")[0].focus();
+      return false;
+    } else if (password !== passwordConfirm) {
+      this.setState({
+        password: "",
+        passwordConfirm: "",
+        error:
+          "Password values did not match. Please enter a password and confirm again."
+      });
+      document.getElementById("password")[0].focus();
+      return false;
+    }
+    this.setState({ error: null });
+    return true;
+  };
+
+  createNewUser = () => {
+    if (this.checkValidInfo()) {
+      const URL = domain + "/users";
+      fetch(URL, {
+        method: "POST",
+        headers: { ...jsonHeaders },
+        body: JSON.stringify({
+          username: this.state.username,
+          displayName: this.state.displayName,
+          password: this.state.password
+        })
+      })
+        .then(response => handleJsonResponse(response))
+        .then(() => {
+          this.setState({ newUserCreated: true });
+        })
+        .catch(error => {
+          this.setState({
+            error:
+              "There was a problem getting you signed up. Please try again."
+          });
+        });
+
+      if (this.state.newUserCreated) {
+        alert(
+          `You are now registered! Please click okay to log in with your new account information!`
+        );
+
+        // redirect user to login page
+        this.props.history.push("/");
+      }
+    }
   };
 
   render() {
@@ -43,18 +124,11 @@ class RegistrationForm extends React.Component {
       <div id="regForm">
         <Form>
           <Form.Field>
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="displayName">Display Name</label>
             <input
-              placeholder="First Name"
-              name="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              placeholder="Last Name"
-              name="lastName"
-              value={this.state.lastName}
+              placeholder="Display Name"
+              name="displayName"
+              value={this.state.displayName}
               onChange={this.handleChange}
             />
             <label htmlFor="email">Email Address</label>
@@ -62,6 +136,7 @@ class RegistrationForm extends React.Component {
               type="email"
               placeholder="123abc@example.com"
               name="email"
+              required
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -109,6 +184,7 @@ class RegistrationForm extends React.Component {
               width: "30%",
               textAlign: "center"
             }}
+            onClick={this.createNewUser}
           >
             <Button.Content visible>
               <Icon name="paper plane" />
@@ -128,9 +204,10 @@ class RegistrationForm extends React.Component {
             </Button.Content>
           </Button>
         </div>
+        {this.state.error && <div id="errorDisplay">{this.state.error}</div>}
       </div>
     );
   }
 }
 
-export default RegistrationForm;
+export default withRouter(RegistrationForm);
