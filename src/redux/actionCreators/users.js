@@ -20,7 +20,7 @@ export const getSingleUser = username => {
       .catch(error =>
         dispatch({
           type: GET_USER.FAIL,
-          payload: error
+          payload: error 
         })
       );
   };

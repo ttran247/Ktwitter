@@ -1,5 +1,7 @@
 import React from "react";
 import MessageCard from "./MessageCard";
+import {getMessageArray} from "../../redux/actionCreators"
+import {connect} from "react-redux"
 
 const messages = [
   {
@@ -75,6 +77,11 @@ const messages = [
 ];
 
 class MessageList extends React.Component {
+  
+  componentDidMount() {
+    this.props.getMessageArray()
+  }
+  
   render() {
     return messages.map(message => {
       return (
@@ -89,4 +96,12 @@ class MessageList extends React.Component {
   }
 }
 
-export default MessageList;
+const mapDispatchToProps = dispatch => {
+    return {
+      getMessageArray: ()=> {
+        dispatch(getMessageArray()) 
+      }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(MessageList)

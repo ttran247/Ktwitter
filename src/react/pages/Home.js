@@ -7,7 +7,7 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <h2>Home</h2>
+        <h2 className="home">Home</h2>
         <div id="container">
           <Menu isAuthenticated={this.props.isAuthenticated} />
           <NewMessageEntry />
