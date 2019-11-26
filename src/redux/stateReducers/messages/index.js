@@ -1,0 +1,1 @@
+export {getMessageFeed} from "./messageObject"
