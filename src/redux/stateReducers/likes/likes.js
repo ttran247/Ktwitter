@@ -1,26 +1,33 @@
 import { LIKES } from "../../actionTypes";
 import { CommentAction } from "semantic-ui-react";
 
-const initialState ={
-    likes: 0,
-    error: null
-}
+const initialState = { 
+    likes: null, 
+    loading: false,
+     error: null
+     }
 
-export const Likes = (state = initialState, action ) => {
-    switch(action.type){
-        case LIKES.SUCCESS:
+export const Likes = (state = initialState, action) => {
+    switch (action.type) {
+        case LIKES.START:
             return {
-                likes: +1,
-                error:null
-
-            }
-        case LIKES.FAIL:
-            return {
-                likes: 0,
+                loading: true,
                 error: null
 
             }
-            default:
-                return state;
+        case LIKES.SUCCESS
+            return {
+                messages: action.payload,
+                loading: true 
+            }
+        case LIKES.FAIL:
+            return {
+                likes: false,
+                loading: false,
+                error: action.payload
+
+            }
+        default:
+            return state;
     }
 }
