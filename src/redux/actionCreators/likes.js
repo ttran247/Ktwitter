@@ -14,7 +14,7 @@ export const addLike = (messageId) => {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
-                ...jsonHeaders
+                ...handleJsonResponse
             },
             body: JSON.stringify({messageId:messageId})
         })

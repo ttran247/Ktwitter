@@ -10,8 +10,10 @@ class Home extends React.Component {
         <h2 className="home">Home</h2>
         <div id="container">
           <Menu isAuthenticated={this.props.isAuthenticated} />
+          <div id="column">
           <NewMessageEntry />
           <MessageList />
+          </div>
         </div>
       </>
     );

@@ -22,7 +22,7 @@ class MessageCard extends React.Component {
               <i aria-hidden="true" class="heart icon"></i>
               Like
     </button>
-            <a class="ui red left pointing basic label">2,048</a>
+            <a class="ui red left pointing basic label">0</a>
           </div>
 
         </div>
