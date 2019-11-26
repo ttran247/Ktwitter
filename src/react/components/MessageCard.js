@@ -1,13 +1,14 @@
 import React from "react";
 // import "./MessageCard.css";
+import "./messageCard.css";
 
 class MessageCard extends React.Component {
   render() {
     return (
       <div
         style={{
-          border: "1px solid black",
-          borderRadius: "10px",
+          border: "2px solid black",
+          borderRadius: "15px",
           padding: "1em",
           margin: "2em"
         }}
