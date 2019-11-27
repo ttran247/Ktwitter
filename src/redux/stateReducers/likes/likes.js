@@ -6,7 +6,7 @@ const initialState = {
      error: null
      }
 
-export const Likes = (state = initialState, action) => {
+export const addLike = (state = initialState, action) => {
     switch (action.type) {
         case ADD_LIKE.START:
             return {

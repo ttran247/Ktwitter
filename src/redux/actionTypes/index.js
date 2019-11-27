@@ -14,3 +14,4 @@ export const LOGOUT = createActionTypes("LOGOUT");
 export const GET_USER = createActionTypes("GET_USER");
 export const GET_MESSAGES = createActionTypes("GET_MESSAGES")
 export const ADD_LIKE = createActionTypes("ADD_LIKE")
+export const POST_MESSAGE = createActionTypes("POST_MESSAGE");

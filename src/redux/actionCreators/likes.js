@@ -1,5 +1,5 @@
 import { ADD_LIKE } from "../actionTypes"
-import { domain, handleJsonResponse } from "./constants"
+import { domain, handleJsonResponse, jsonHeaders } from "./constants"
 import { store } from "../index"
 const URL = domain + "/likes"
 
@@ -14,21 +14,24 @@ export const addLike = (messageId) => {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
-                ...handleJsonResponse
+                ...jsonHeaders
             },
             body: JSON.stringify({messageId:messageId})
         })
-            .then(response => handleJsonResponse)
+            .then(response => handleJsonResponse(response))
             .then(data =>
                 dispatch({
                     type: ADD_LIKE.SUCCESS
                 
                 })
             )
-            .catch(error =>
+            .catch(error=>{
+                console.log(error.headers)
                 dispatch({
-                    type: ADD_LIKE.FAIL,
-                    payload: error
-                }))
+                    type:ADD_LIKE.FAIL,
+                    payload:error
+                })
+            })
+                
     };
 };
