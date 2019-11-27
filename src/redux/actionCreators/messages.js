@@ -35,9 +35,8 @@ export const postMessage = text => {
     });
 
     const token = store.getState().auth.login.result.token;
-    console.log(token);
 
-    return fetch(URL, {
+    return fetch(url, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
