@@ -1,6 +1,6 @@
 import React from "react";
 // import "./MessageCard.css";
-import "./messageCard.css";
+import "./MessageCard.css";
 
 class MessageCard extends React.Component {
   render() {
