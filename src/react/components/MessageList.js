@@ -32,7 +32,9 @@ class MessageList extends React.Component {
           const date = new Date(message.createdAt);
           return (
             <MessageCard
-              username={message.username}
+              username={
+                message.displayName ? message.displayName : message.username
+              }
               text={message.text}
               createdAt={`${date.toLocaleTimeString(navigator.language, {
                 month: "short",
