@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postMessage } from "../../redux/actionCreators";
-import { Button, Icon } from "semantic-ui-react";
+import { postMessage, getMessageArray } from "../../redux/actionCreators";
+import { Button, Icon, Modal } from "semantic-ui-react";
 import "./NewMessageEntry.css";
 
 class NewMessageEntry extends React.Component {
@@ -10,14 +10,16 @@ class NewMessageEntry extends React.Component {
 
     this.state = {
       inputValue: "",
-      error: null
+      error: null,
+      modalOpen: false
     };
   }
 
   handleChange = event => {
     if (this.state.inputValue.length <= 140) {
       this.setState({
-        inputValue: event.target.value
+        inputValue: event.target.value,
+        error: null
       });
     }
   };
@@ -36,39 +38,86 @@ class NewMessageEntry extends React.Component {
         error:
           "Oops! Clearly you have something to say, but why not type it first?"
       });
-      document.getElementsByTagName("textarea")[0].focus();
     }
+  };
+
+  closeModal = () => {
+    this.setState({ modalOpen: false });
+  };
+
+  openModal = () => {
+    this.setState({ modalOpen: true });
   };
 
   render() {
     let typedChars = this.state.inputValue.length;
     return (
       <div id="entryContainer">
-        <textarea
-          placeholder="Write a new post here..."
-          maxLength="140"
-          onChange={this.handleChange}
-          value={this.state.inputValue}
-        />
-        <div id="infoContainer">
-          {typedChars}/140 characters
-          <Button
-            animated
+        <Modal
+          trigger={
+            <Button
+              animated
+              style={{
+                backgroundColor: "var(--kenzieBlue)",
+                color: "var(--kenzieGreen)",
+                width: "15%"
+              }}
+              onClick={this.openModal}
+            >
+              <Icon name="edit" size="big" />
+            </Button>
+          }
+          style={{ width: "40%", height: "30%" }}
+          open={this.state.modalOpen}
+          closeIcon
+          onClose={this.closeModal}
+        >
+          <Modal.Content
             style={{
-              backgroundColor: "var(--kenzieBlue)",
-              color: "var(--kenzieGreen)",
-              width: "50%",
-              textAlign: "center"
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
             }}
-            onClick={this.postNewMessage}
           >
-            <Button.Content visible>
-              <Icon name="comments" />
-            </Button.Content>
-            <Button.Content hidden>Post</Button.Content>
-          </Button>
-        </div>
-        {this.state.error && <div id="errorContainer">{this.state.error}</div>}
+            <textarea
+              placeholder="Write a new post here..."
+              maxLength="140"
+              onChange={this.handleChange}
+              value={this.state.inputValue}
+              style={{
+                width: "100%",
+                border: "none"
+              }}
+              rows="6"
+              autoFocus="true"
+            />
+            {typedChars}/140 characters
+            <Button
+              animated
+              style={{
+                backgroundColor: "var(--kenzieBlue)",
+                color: "var(--kenzieGreen)",
+                textAlign: "center"
+              }}
+              onClick={() => {
+                this.postNewMessage();
+                if (this.state.inputValue !== "") {
+                  this.setState({ inputValue: "" });
+                  this.closeModal();
+                  this.props.reloadMessages();
+                }
+              }}
+            >
+              <Button.Content visible>
+                <Icon name="comments" />
+              </Button.Content>
+              <Button.Content hidden>Post</Button.Content>
+            </Button>
+            {this.state.error && (
+              <div id="errorContainer">{this.state.error}</div>
+            )}
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }
@@ -78,6 +127,9 @@ const mapDispatchToProps = dispatch => {
   return {
     postMessage: text => {
       dispatch(postMessage(text));
+    },
+    reloadMessages: () => {
+      dispatch(getMessageArray());
     }
   };
 };
