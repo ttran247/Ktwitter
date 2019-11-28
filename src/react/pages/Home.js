@@ -12,7 +12,8 @@ class Home extends React.Component {
           <PageHeader title="Home" tagLine="Welcome back!" />
           <NewMessageEntry />
           <MessageList />
-        </div>
+          </div>
+        
       </>
     );
   }
