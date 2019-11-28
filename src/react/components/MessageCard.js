@@ -1,11 +1,11 @@
 import React from "react";
-// import "./MessageCard.css";
+import { addLike } from "../../redux/actionCreators";
+import { connect } from "react-redux";
 import "./MessageCard.css";
-
 class MessageCard extends React.Component {
   addLike = () => {
-    this.props.addLike(this.props.id)
-  }
+    this.props.addLike(this.props.id);
+  };
   render() {
     return (
       <div
@@ -21,15 +21,15 @@ class MessageCard extends React.Component {
         <p>{this.props.createdAt}</p>
         <div>
           <div className="ui right labeled button" role="button" tabIndex="0">
-            <button onClick={this.addLike}className="ui red button">
+            <button onClick={this.addLike} className="ui red button">
               <i aria-hidden="true" className="heart icon"></i>
               Like
-    </button>
-            <a className="ui red left pointing basic label">{this.props.likes}</a>
+            </button>
+            <a className="ui red left pointing basic label">
+              {this.props.likes}
+            </a>
           </div>
-
         </div>
-
       </div>
     );
   }
@@ -37,11 +37,10 @@ class MessageCard extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addLike: (messageId) => {
+    addLike: messageId => {
       dispatch(addLike(messageId));
     }
   };
 };
 
-
-export default connect(null,mapDispatchToProps)(MessageCard);
+export default connect(null, mapDispatchToProps)(MessageCard);
