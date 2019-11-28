@@ -1,0 +1,1 @@
+export {addLike} from "./likes"
