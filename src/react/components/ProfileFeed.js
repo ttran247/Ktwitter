@@ -1,42 +1,47 @@
 import React from "react";
-import { Feed } from 'semantic-ui-react'
+import { Menu, Feed } from "semantic-ui-react";
+import "./ProfileFeed.css";
+import { MOCK_POSTS } from "../../mockUserData";
 
-const fakeMessages =  {
-    
-      "id": 0,
-      "text": "This is a tweet by FakeMan",
-      "username": "FakeMan",
-      "createdAt": "2019-11-22T15:29:29.886Z",
-      "likes": 14
-}
+class ProfileFeed extends React.Component {
+  constructor(props) {
+    super(props);
 
-const fakeUser = 
-{
-    "username": "fakeMan25",
-    "displayName": "Fake Man",
-    "about": "Indianapolis - not a real person",
-    "createdAt": "2019-11-17T23:55:05.182Z",
-    "updatedAt": "2019-11-17T23:55:05.182Z",
-    "pictureLocation": "https://heartofamericagroup.com/wp-content/uploads/2019/04/generic-avatar.jpg",
-    "googleId": "fakeman25@gmail.com"
+    this.state = {
+      active: "Messages"
+    };
   }
 
+  switchTabs = (event, { name }) => {
+    this.setState({ active: name });
+  };
 
-class FeedExampleContentDate extends React.Component {
-  
-  render () {
+  render() {
+    const { active } = this.state;
+    return (
+      <React.Fragment>
+        <div id="profileFeed-space">
+          <Menu pointing>
+            <Menu.Item
+              name="Messages"
+              active={active === "Messages"}
+              onClick={this.switchTabs}
+            />
+            <Menu.Item
+              name="Likes"
+              active={active === "Likes"}
+              onClick={this.switchTabs}
+            />
+          </Menu>
+        </div>
+        <div id="profileFeed-feed">
+          {active === "Messages"
+            ? "this shows if messages is selected"
+            : "this shows if likes is selected"}
+        </div>
+      </React.Fragment>
+    );
+  }
+}
 
-  return <Feed id="profileFeed">
-    <Feed.Event>
-      <Feed.Label image={fakeUser.pictureLocation} />
-      <Feed.Content>
-  <Feed.Date>{fakeMessages.createdAt}</Feed.Date>
-        <Feed.Summary>
-          {fakeMessages.text}
-        </Feed.Summary>
-      </Feed.Content>
-    </Feed.Event>
-  </Feed>
-  }}
-  
-export default FeedExampleContentDate
+export default ProfileFeed;
