@@ -1,4 +1,11 @@
 #listContainer {
   height: 100%;
   overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#listContainer::-webkit-scrollbar {
+  display: none;
 }

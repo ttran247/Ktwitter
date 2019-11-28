@@ -1,10 +1,6 @@
 import React from "react";
 // import "./MessageCard.css";
-import "./messageCard.css";
-import {addLike} from "../../redux/actionCreators"
-import {connect} from "react-redux"
-
-
+import "./MessageCard.css";
 
 class MessageCard extends React.Component {
   addLike = () => {
