@@ -9,6 +9,7 @@ export const addLike = (messageId) => {
             type: ADD_LIKE.START
         });
         const token = store.getState().auth.login.result.token
+        console.log(messageId, token)
 
         return fetch(URL, {
             method: "POST",
