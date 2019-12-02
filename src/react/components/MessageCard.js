@@ -2,6 +2,7 @@ import React from "react";
 import { addLike } from "../../redux/actionCreators";
 import { connect } from "react-redux";
 import "./MessageCard.css";
+import { Link } from "react-router-dom";
 class MessageCard extends React.Component {
   addLike = () => {
     this.props.addLike(this.props.id);
@@ -16,7 +17,10 @@ class MessageCard extends React.Component {
           margin: "2em"
         }}
       >
-        <h4>{this.props.username}</h4>
+        <Link to={`/profile/${this.props.username}`}>
+          <h4 className="username">{this.props.username}</h4>
+        </Link>
+
         <p>{this.props.text}</p>
         <p>{this.props.createdAt}</p>
         <div>
