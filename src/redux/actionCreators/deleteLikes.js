@@ -1,34 +1,33 @@
-import { ADD_LIKE } from "../actionTypes";
-import { domain, handleJsonResponse, jsonHeaders } from "./constants";
+import { DELETE_LIKE } from "../actionTypes";
+import { domain, handleJsonResponse, jsonHeaders } from ".constants";
 import { store } from "../index";
-const URL = domain + "/likes";
+const URL = domain + "/delete/likes";
 
-export const addLike = messageId => {
+export const deleteLike = likeId => {
   return dispatch => {
     dispatch({
-      type: ADD_LIKE.START
+      type: DELETE_LIKE.START
     });
+
     const token = store.getState().auth.login.result.token;
-    console.log(messageId, token);
 
     return fetch(URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorirzation: `Bearer ${token}`,
         ...jsonHeaders
       },
-      body: JSON.stringify({ messageId: messageId })
+      body: JSON.stringify({ likeID: likeId })
     })
       .then(response => handleJsonResponse(response))
       .then(data =>
         dispatch({
-          type: ADD_LIKE.SUCCESS
+          type: DELETE_LIKE.SUCCESS
         })
       )
       .catch(error => {
-        console.log(error.headers);
         dispatch({
-          type: ADD_LIKE.FAIL,
+          type: DELETE_LIKE,
           payload: error
         });
       });

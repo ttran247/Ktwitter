@@ -25,7 +25,8 @@ class MessageCard extends React.Component {
               <i aria-hidden="true" className="heart icon"></i>
               Like
             </button>
-            <a className="ui red left pointing basic label">
+
+            <a href=" #" className="ui red left pointing basic label">
               {this.props.likes}
             </a>
           </div>
