@@ -19,19 +19,31 @@ class Menu extends React.Component {
             <>
               <Link to="/home/:username">
                 <div id="iconSpacer">
-                  <Icon name="home" color="teal" size="large" />
+                  <Icon
+                    name="home"
+                    style={{ color: "var(--kenzieGreen)" }}
+                    size="large"
+                  />
                 </div>
                 Home
               </Link>
               <Link to="/profile/:username">
                 <div id="iconSpacer">
-                  <Icon name="user" color="teal" size="large" />
+                  <Icon
+                    name="user"
+                    style={{ color: "var(--kenzieGreen)" }}
+                    size="large"
+                  />
                 </div>
                 My Profile
               </Link>
               <Link to="/" onClick={this.handleLogout}>
                 <div id="iconSpacer">
-                  <Icon name="arrow left" color="teal" size="large" />
+                  <Icon
+                    name="arrow left"
+                    style={{ color: "var(--kenzieGreen)" }}
+                    size="large"
+                  />
                 </div>
                 Logout
               </Link>
@@ -40,13 +52,21 @@ class Menu extends React.Component {
             <>
               <Link to="/">
                 <div id="iconSpacer">
-                  <Icon name="edit" color="teal" size="large" />
+                  <Icon
+                    name="edit"
+                    style={{ color: "var(--kenzieGreen)" }}
+                    size="large"
+                  />
                 </div>
                 Log In
               </Link>
               <Link to="/register">
                 <div id="iconSpacer">
-                  <Icon name="paper plane" color="teal" size="large" />
+                  <Icon
+                    name="paper plane"
+                    style={{ color: "var(--kenzieGreen)" }}
+                    size="large"
+                  />
                 </div>
                 Register
               </Link>

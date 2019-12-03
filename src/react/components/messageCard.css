@@ -1,3 +1,33 @@
-username {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+#messageCard-card {
+  display: flex;
+  width: 50%;
+  border: 1px solid var(--kenzieBlue);
+  border-radius: 5px;
+}
+
+#messageCard-card h3 {
+  color: var(--kenzieBlue);
+  font-size: 18px;
+}
+
+#messageCard-pic {
+  display: flex;
+  margin: 10px;
+}
+
+#messageCard-space {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#messageCard-space p {
+  color: rgb(170, 170, 170);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+#messageCard-buttons {
+  border-top: 1px solid var(--kenzieBlue);
+  padding: 5px;
 }

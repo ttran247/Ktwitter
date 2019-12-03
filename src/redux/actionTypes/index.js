@@ -1,5 +1,3 @@
-// import { create } from "domain";
-
 const createActionTypes = actionName => {
   const ACTIONNAME = actionName.toUpperCase();
   return {
@@ -16,4 +14,3 @@ export const GET_MESSAGES = createActionTypes("GET_MESSAGES");
 export const ADD_LIKE = createActionTypes("ADD_LIKE");
 export const POST_MESSAGE = createActionTypes("POST_MESSAGE");
 export const DELETE_LIKE = createActionTypes("DELETE_LIKE");
-export const DELETE_MESSAGE = createActionTypes("DELETE_MESSAGE");

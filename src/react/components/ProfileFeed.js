@@ -1,7 +1,6 @@
 import React from "react";
-import { Menu, Feed } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import "./ProfileFeed.css";
-import { MOCK_POSTS } from "../../mockUserData";
 
 class ProfileFeed extends React.Component {
   constructor(props) {
