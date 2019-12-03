@@ -2,6 +2,8 @@ import { GET_USER } from "../actionTypes";
 import { CHANGE_PICTURE } from "../actionTypes";
 import { UPDATE_ABOUT } from "../actionTypes"
 import { domain, handleJsonResponse } from "./constants";
+import { store } from "../index"
+import { jsonHeaders } from "../actionCreators/constants/index"
 
 const URL = domain + "/users";
 
@@ -28,7 +30,9 @@ export const getSingleUser = username => {
   };
 };
 
-export const ChangePicture = picture => {
+export const changePicture = picture => {
+  const username = store.getState().auth.login.result.username
+  const token = store.getState().auth.login.result.token
   return dispatch => {
     dispatch({
       type: CHANGE_PICTURE.START
@@ -36,7 +40,10 @@ export const ChangePicture = picture => {
 
     return fetch(URL + `/${username}/picture`, {
     method: "PUT",
-    headers: jsonHeaders,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...jsonHeaders
+      },
     body: JSON.stringify({
         picture: picture
     })
@@ -58,6 +65,8 @@ export const ChangePicture = picture => {
 };
 
 export const updateAbout = data => {
+  const username = store.getState().auth.login.result.username
+  const token = store.getState().auth.login.result.token
   return dispatch => {
     dispatch({
       type: UPDATE_ABOUT.START
@@ -65,7 +74,10 @@ export const updateAbout = data => {
 
     return fetch(URL + `/${username}`, {
     method: "PATCH",
-    headers: jsonHeaders,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...jsonHeaders
+    },
     body: JSON.stringify({
         data: data
     })
@@ -74,7 +86,7 @@ export const updateAbout = data => {
       .then(data =>
         dispatch({
           type: UPDATE_ABOUT.SUCCESS,
-          payload: data.about
+          payload: data.statusCode
         })
       )
       .catch(error =>

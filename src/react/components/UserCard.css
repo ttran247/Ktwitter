@@ -1,7 +1,9 @@
-#homeContainer {
+#userCard-space {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  justify-content: space-evenly;
+  padding: 5px;
   height: 100%;
 }

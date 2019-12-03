@@ -1,0 +1,23 @@
+#profileFeed-space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+}
+
+#profileFeed-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 5px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#profileFeed-feed::-webkit-scrollbar {
+  display: none;
+}

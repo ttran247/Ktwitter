@@ -2,9 +2,13 @@
 
 :root {
   --kenzieBlue: rgb(0, 53, 107);
-  --kenzieGreen: rgb(0, 158, 158);
+  --kenzieGreen: rgb(143, 253, 209);
   --defaultFont: "Josefin Sans";
   --headerFont: "Permanent Marker";
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
 
 * {
@@ -16,12 +20,8 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
+  -ms-overflow-style: none;
+  scrollbar-width: 0px;
 }
 
 #root {
