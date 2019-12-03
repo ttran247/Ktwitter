@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Icon, Image } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
+import { CHANGE_PICTURE } from "../../actionTypes"
 import "./Profile.css"
 
   
@@ -40,5 +41,23 @@ return <Card>
     </Card>
   
 }}
-  export default CardExampleCard;
+const mapDispatchToProps = dispatch => {
+  return {
+  CHANGE_PICTURE: picture => {
+    dispatch(getSingleUser(picture))
+  }
+  }
+}
+const mapStateToProps = state => {
+  const userSection = state.user.getCurrentUser.user
+  return {
+    username: state.auth.login.result.username,
+    displayName: userSection.displayName,
+    pictureLocation: userSection.pictureLocation,
+    about: userSection.about}
+}
+
+
+
+export default CardExampleCard;
   
