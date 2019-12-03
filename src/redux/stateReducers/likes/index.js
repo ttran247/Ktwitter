@@ -1,1 +1,2 @@
-export {addLike} from "./likes"
+export { addLike } from "./addLike";
+export { deleteLike } from "./deleteLike";
