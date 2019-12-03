@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, Icon, Image } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
-import { CHANGE_PICTURE } from "../../actionTypes"
+import { ChangePicture } from "../../redux/actionCreators"
+import {} from "../../redux/actionCreators"
+import {} from "../../"
 import "./Profile.css"
 
   
@@ -20,6 +22,11 @@ const fakeUser =
 
 class CardExampleCard extends React.Component {
     
+  componentDidMount = () => {
+    
+  }
+
+
     render () {
 
 return <Card>
@@ -43,8 +50,8 @@ return <Card>
 }}
 const mapDispatchToProps = dispatch => {
   return {
-  CHANGE_PICTURE: picture => {
-    dispatch(getSingleUser(picture))
+  ChangePicture: picture => {
+    dispatch(ChangePicture(picture))
   }
   }
 }
