@@ -1,13 +1,17 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
+import { getMessageArray } from "../../redux";
+import { connect } from "react-redux";
 import "./ProfileFeed.css";
+import MessageCard from "./MessageCard";
 
 class ProfileFeed extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      active: "Messages"
+      active: "Messages",
+      messages: []
     };
   }
 
@@ -15,8 +19,35 @@ class ProfileFeed extends React.Component {
     this.setState({ active: name });
   };
 
+  componentDidMount = () => {
+    this.props.getMessages();
+  };
+
+  componentDidUpdate = previousProps => {
+    if (this.props.messages && previousProps.messages !== this.props.messages) {
+      this.setState({ messages: this.props.messages });
+    }
+  };
+
   render() {
-    const { active } = this.state;
+    const { active, messages } = this.state;
+
+    let userMessages = [];
+    messages.forEach(message => {
+      if (message.username === this.props.username) {
+        userMessages.push(message);
+      }
+    });
+
+    let likedPosts = [];
+    messages.forEach(message => {
+      message.likes.forEach(like => {
+        if (like.username === this.props.username) {
+          likedPosts.push(message);
+        }
+      });
+    });
+
     return (
       <React.Fragment>
         <div id="profileFeed-space">
@@ -34,13 +65,79 @@ class ProfileFeed extends React.Component {
           </Menu>
         </div>
         <div id="profileFeed-feed">
-          {active === "Messages"
-            ? "this shows if messages is selected"
-            : "this shows if likes is selected"}
+          {active === "Messages" && userMessages.length > 0
+            ? userMessages.map(message => {
+                return (
+                  <MessageCard
+                    username={
+                      message.displayName
+                        ? message.displayName
+                        : message.username
+                    }
+                    likes={message.likes.length}
+                    text={message.text}
+                    date={`${new Date(message.createdAt).toLocaleTimeString(
+                      navigator.language,
+                      {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric"
+                      }
+                    )}`}
+                    key={message.id}
+                    id={message.id}
+                  />
+                );
+              })
+            : active === "Messages"
+            ? `You haven't made any posts yet...`
+            : active === "Likes" && likedPosts.length > 0
+            ? likedPosts.map(message => {
+                return (
+                  <MessageCard
+                    username={
+                      message.displayName
+                        ? message.displayName
+                        : message.username
+                    }
+                    likes={message.likes.length}
+                    text={message.text}
+                    date={`${new Date(message.createdAt).toLocaleTimeString(
+                      navigator.language,
+                      {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric"
+                      }
+                    )}`}
+                    key={message.id}
+                    id={message.id}
+                  />
+                );
+              })
+            : "You haven't liked any posts yet..."}
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default ProfileFeed;
+const mapDispatchToProps = dispatch => {
+  return {
+    getMessages: () => {
+      dispatch(getMessageArray());
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    messages: state.messages.getMessageFeed.messages
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileFeed);

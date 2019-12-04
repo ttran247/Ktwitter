@@ -13,7 +13,7 @@ class Profile extends React.Component {
           <div id="mainContainer">
             <UserCard />
             <div id="featureContainer">
-              <ProfileFeed />
+              <ProfileFeed username={this.props.match.params.username} />
             </div>
           </div>
         </div>

@@ -10,6 +10,11 @@
   font-size: 18px;
 }
 
+#messageCard-card h3:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 #messageCard-pic {
   display: flex;
   margin: 10px;
