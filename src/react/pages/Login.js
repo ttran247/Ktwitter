@@ -16,15 +16,30 @@ class Login extends React.Component {
           </div>
           <div id="loginGraphics">
             <div id="graphic">
-              <Icon name="users" color="teal" size="big" /> <br />
+              <Icon
+                name="users"
+                style={{ color: "var(--kenzieGreen)" }}
+                size="big"
+              />{" "}
+              <br />
               Hear what people are talking about
             </div>
             <div id="graphic">
-              <Icon name="comments" color="teal" size="big" /> <br />
+              <Icon
+                name="comments"
+                style={{ color: "var(--kenzieGreen)" }}
+                size="big"
+              />{" "}
+              <br />
               Join the conversation
             </div>
             <div id="graphic">
-              <Icon name="thumbs up" color="teal" size="big" /> <br />
+              <Icon
+                name="thumbs up"
+                style={{ color: "var(--kenzieGreen)" }}
+                size="big"
+              />{" "}
+              <br />
               Express your opinion
             </div>
           </div>

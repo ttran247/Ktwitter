@@ -3,11 +3,26 @@ import { Link } from ".";
 import "./Menu.css";
 import { withAsyncAction } from "../HOCs";
 import { Icon } from "semantic-ui-react";
+import { store } from "../../redux";
 
 class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: ""
+    };
+  }
   handleLogout = event => {
     event.preventDefault();
     this.props.logout();
+  };
+
+  componentDidMount = () => {
+    if (this.props.isAuthenticated) {
+      let authUser = store.getState().auth.login.result.username;
+      this.setState({ authUser });
+    }
   };
 
   render() {
@@ -17,7 +32,7 @@ class Menu extends React.Component {
         <div id="menu-links">
           {this.props.isAuthenticated ? (
             <>
-              <Link to="/home/:username">
+              <Link to={`/home/${this.state.authUser}`}>
                 <div id="iconSpacer">
                   <Icon
                     name="home"
@@ -27,7 +42,7 @@ class Menu extends React.Component {
                 </div>
                 Home
               </Link>
-              <Link to="/profile/:username">
+              <Link to={`/profile/${this.state.authUser}`}>
                 <div id="iconSpacer">
                   <Icon
                     name="user"
