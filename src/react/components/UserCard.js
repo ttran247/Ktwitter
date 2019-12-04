@@ -2,14 +2,18 @@ import React from "react";
 import { Card, Image, Popup, Dropdown, Modal } from "semantic-ui-react";
 import { Button } from "semantic-ui-react";
 import "./UserCard.css";
-import { fakeUser } from "../../mockUserData";
-import {changePicture, updateAbout} from "../../redux/actionCreators"
+import {changePicture, updateAbout, getSingleUser} from "../../redux/actionCreators";
+import { connect } from "react-redux"
+import defaultPic from "../../img/brokenEgg.png" 
 
 
 class UserCard extends React.Component {
   state = {
     inputValue: "",
-    modalOpen: false
+    modalOpen: false,
+    modalStatus: "",
+    user: {}
+
   }
 
   handleChange = event => {
@@ -19,22 +23,47 @@ class UserCard extends React.Component {
   };
     
   closeModal = () => {
-    this.setState({ modalOpen: false });
+    this.setState({ modalOpen: false, modalStatus: "" });
   };
 
-  openModal = () => {
-    this.setState({ modalOpen: true });
+  openModal = (event) => {
+    let modalStatus = ""
+    if (event.target.innerHTML ==="Change Profile Picture"){
+          modalStatus = "picture"
+    }
+    else if (event.target.innerHTML ==="Modify 'About Me'"){
+      modalStatus = "about"
+    }
+    
+    this.setState({ modalOpen: true, modalStatus });
+    console.log(event.target.innerHTML)
+
   };
         
-    
+  newPicture = () => {
+    this.props.changePicture(this.state.inputValue)
+  }
   
+  newAbout = () => {
+    this.props.updateAbout(this.state.inputValue)
+  }
+
+  componentDidMount = () => {
+    this.props.getSingleUser(this.props.username)
+  } 
+
+  componentDidUpdate(previousProps) {
+    if (this.props.user && previousProps.user !== this.props.user) {
+      this.setState({ user: this.props.user});
+  }}
+
   render() {
+    const {user} = this.state
     return (
       <div id="userCard-space">
         <Image
-          src={fakeUser.pictureLocation}
+          src= {user.pictureLocation ? user.pictureLocation : defaultPic }
           size="medium"
-          spaced="true"
           circular={true}
           style={{
             border: "4px solid var(--kenzieBlue)"
@@ -42,8 +71,8 @@ class UserCard extends React.Component {
         />
         <Card id="userCard-card">
           <Card.Content>
-            <Card.Header>{fakeUser.displayName}</Card.Header>
-            <Card.Description>{fakeUser.about}</Card.Description>
+            <Card.Header>{user.displayName ? user.displayName : user.username}</Card.Header>
+            <Card.Description>{user.about ? user.about : "all about me"}</Card.Description>
           </Card.Content>
           <Card.Content extra>
             <Popup
@@ -57,7 +86,7 @@ class UserCard extends React.Component {
                 />
               }
             >
-              Username: <strong>{fakeUser.username}</strong>
+              Username: <strong>{user.username}</strong>
             </Popup>
             <Popup
               trigger={
@@ -72,7 +101,7 @@ class UserCard extends React.Component {
             >
               Joined:{" "}
               <strong>
-                {new Date(fakeUser.createdAt).toLocaleDateString(
+                {new Date(user.createdAt).toLocaleDateString(
                   navigator.language,
                   {
                     month: "long",
@@ -106,7 +135,7 @@ class UserCard extends React.Component {
            
                   <Dropdown.Item 
                     text="Modify 'About Me'" 
-                    // onClick={this.openModal}
+                    onClick={this.openModal}
                   />
                 </Dropdown.Menu>
               </Dropdown>
@@ -120,7 +149,8 @@ class UserCard extends React.Component {
               alignItems: "center"
             }}
           >
-            <textarea
+           {this.state.modalStatus === "picture" ? 
+           <textarea
               placeholder="Enter new picture URL"
               onChange={this.handleChange}
               value={this.state.inputValue}
@@ -130,7 +160,61 @@ class UserCard extends React.Component {
               }}
               rows="6"
               autoFocus="true"
-            />
+            /> 
+            
+
+            
+            : <textarea
+            placeholder="Tell us about you"
+            onChange={this.handleChange}
+            value={this.state.inputValue}
+            style={{
+              width: "85%",
+              border: "none"
+            }}
+            rows="6"
+            autoFocus="true" />}
+
+          {this.state.modalStatus === "picture" ? 
+            <Button
+              style={{
+                backgroundColor: "var(--kenzieBlue)",
+                color: "var(--kenzieGreen)",
+                textAlign: "center",
+                width: "150px",
+                height: "50px"
+              }}
+              onClick={() => {
+                this.newPicture();
+                if (this.state.inputValue !== "") {
+                  this.setState({ inputValue: "" });
+                  this.closeModal();
+                }
+              }}
+              >
+              <Button.Content>Change Profile Photo</Button.Content>
+            </Button> :
+            
+            <Button
+              style={{
+                backgroundColor: "var(--kenzieBlue)",
+                color: "var(--kenzieGreen)",
+                textAlign: "center",
+                width: "150px",
+                height: "50px"
+              }}
+              onClick={() => {
+                this.newAbout();
+                if (this.state.inputValue !== "") {
+                  this.setState({ inputValue: "" });
+                  this.closeModal();
+
+                }
+              }}
+              >
+              <Button.Content>Update Your Bio</Button.Content>
+            </Button>}
+            
 </Modal.Content>
 
         </Modal>
@@ -148,9 +232,17 @@ const mapDispatchToProps = (dispatch) => {
       },
       changePicture: picture => {
         dispatch(changePicture(picture))
+      },
+      getSingleUser: username => {
+        dispatch(getSingleUser(username))
       }
     }
 }
 
+const mapStateToProps = state => {
+    return {
+      user: state.user.getSingleUser.user
+    }
+}
 
-export default UserCard;
+export default connect(mapStateToProps, mapDispatchToProps)(UserCard);
