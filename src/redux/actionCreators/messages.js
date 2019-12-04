@@ -3,7 +3,6 @@ import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
 
 const url = domain + "/messages";
-
 export const getMessageArray = () => {
   return dispatch => {
     dispatch({
@@ -68,14 +67,14 @@ export const deleteMessage = messageId => {
     });
 
     const token = store.getState().auth.login.result.token;
-
-    return fetch(URL + messageId, {
+    const startingURL = url + "/" + messageId;
+    console.log(token, startingURL);
+    return fetch(url + "/" + messageId, {
       method: "DELETE",
       headers: {
         Authorirzation: `Bearer ${token}`,
         ...jsonHeaders
-      },
-      body: JSON.stringify({ messageId: messageId })
+      }
     })
       .then(response => handleJsonResponse(response))
       .then(data =>
@@ -84,6 +83,7 @@ export const deleteMessage = messageId => {
         })
       )
       .catch(error => {
+        console.log(error);
         dispatch({
           type: DELETE_MESSAGE.FAIL,
           payload: error

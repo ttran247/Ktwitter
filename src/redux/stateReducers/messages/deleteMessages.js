@@ -16,7 +16,6 @@ export const deleteMessage = (state = initialState, action) => {
       return {
         loading: false
       };
-
     case DELETE_MESSAGE.FAIL:
       return {
         loading: false,
