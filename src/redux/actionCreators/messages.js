@@ -72,7 +72,7 @@ export const deleteMessage = messageId => {
     return fetch(url + "/" + messageId, {
       method: "DELETE",
       headers: {
-        Authorirzation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         ...jsonHeaders
       }
     })

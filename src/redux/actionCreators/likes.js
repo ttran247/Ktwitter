@@ -47,7 +47,7 @@ export const deleteLike = likeId => {
     return fetch(URL + `${likeId}`, {
       method: "POST",
       headers: {
-        Authorirzation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         ...jsonHeaders
       },
       body: JSON.stringify({ likedId: likeId })
