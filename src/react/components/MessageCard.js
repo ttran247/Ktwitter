@@ -1,9 +1,13 @@
 import React from "react";
-import { addLike, getSingleUser } from "../../redux/actionCreators";
+import {
+  addLike,
+  getSingleUser,
+  deleteMessage
+} from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label } from "semantic-ui-react";
-import "./MessageCard.css";
+import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
 import { store } from "../../redux";
 
@@ -18,6 +22,10 @@ class MessageCard extends React.Component {
 
   addLike = () => {
     this.props.addLike(this.props.id);
+  };
+
+  deleteMessage = () => {
+    this.props.deleteMessage(this.props.id);
   };
 
   componentDidMount = () => {
@@ -64,7 +72,11 @@ class MessageCard extends React.Component {
               </Label>
             </Button>
             {isUsersMessage && (
-              <Button icon style={{ backgroundColor: "var(--kenzieGreen)" }}>
+              <Button
+                onClick={this.deleteMessage}
+                icon
+                style={{ backgroundColor: "var(--kenzieGreen)" }}
+              >
                 <Icon
                   name="trash alternate outline"
                   style={{ color: "var(--kenzieBlue)" }}
@@ -85,6 +97,9 @@ const mapDispatchToProps = dispatch => {
     },
     getUser: username => {
       dispatch(getSingleUser(username));
+    },
+    deleteMessage: messageId => {
+      dispatch(deleteMessage(messageId));
     }
   };
 };

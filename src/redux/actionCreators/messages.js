@@ -1,4 +1,4 @@
-import { GET_MESSAGES, POST_MESSAGE } from "../actionTypes";
+import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
 
@@ -58,5 +58,36 @@ export const postMessage = text => {
           payload: error
         })
       );
+  };
+};
+
+export const deleteMessage = messageId => {
+  return dispatch => {
+    dispatch({
+      type: DELETE_MESSAGE.START
+    });
+
+    const token = store.getState().auth.login.result.token;
+
+    return fetch(URL + messageId, {
+      method: "DELETE",
+      headers: {
+        Authorirzation: `Bearer ${token}`,
+        ...jsonHeaders
+      },
+      body: JSON.stringify({ messageId: messageId })
+    })
+      .then(response => handleJsonResponse(response))
+      .then(data =>
+        dispatch({
+          type: DELETE_MESSAGE.SUCCESS
+        })
+      )
+      .catch(error => {
+        dispatch({
+          type: DELETE_MESSAGE.FAIL,
+          payload: error
+        });
+      });
   };
 };

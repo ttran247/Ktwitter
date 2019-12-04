@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from ".";
+import { Spinner } from "../components";
 import { withAsyncAction } from "../HOCs";
 import "./LoginForm.css";
 import { Form, Button, Icon } from "semantic-ui-react";
