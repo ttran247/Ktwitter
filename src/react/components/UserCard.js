@@ -11,7 +11,6 @@ class UserCard extends React.Component {
         <Image
           src={fakeUser.pictureLocation}
           size="medium"
-          spaced="true"
           circular={true}
           style={{
             border: "4px solid var(--kenzieBlue)"
