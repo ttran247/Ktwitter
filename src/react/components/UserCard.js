@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Popup, Dropdown } from "semantic-ui-react";
+import { Card, Image, Popup, Dropdown, Modal } from "semantic-ui-react";
 import { Button } from "semantic-ui-react";
 import "./UserCard.css";
 import { fakeUser } from "../../mockUserData";
@@ -7,6 +7,27 @@ import {changePicture, updateAbout} from "../../redux/actionCreators"
 
 
 class UserCard extends React.Component {
+  state = {
+    inputValue: "",
+    modalOpen: false
+  }
+
+  handleChange = event => {
+    this.setState({
+      inputValue: event.target.value,
+    });
+  };
+    
+  closeModal = () => {
+    this.setState({ modalOpen: false });
+  };
+
+  openModal = () => {
+    this.setState({ modalOpen: true });
+  };
+        
+    
+  
   render() {
     return (
       <div id="userCard-space">
@@ -60,20 +81,59 @@ class UserCard extends React.Component {
                 )}
               </strong>
             </Popup>
-            <Dropdown
-              button
-              className="icon"
-              icon="settings"
+          <Modal
+          style={{
+            width: "600px"
+          }}
+          open={this.state.modalOpen}
+          closeIcon
+          onClose={this.closeModal}
+          
+          trigger={
+              <Dropdown
+                button
+                className="icon"
+                icon="settings"
+                style={{
+                  backgroundColor: "var(--kenzieBlue)",
+                  color: "var(--kenzieGreen)"
+                }}
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Item 
+                    text="Change Profile Picture" 
+                    onClick={this.openModal}/>
+           
+                  <Dropdown.Item 
+                    text="Modify 'About Me'" 
+                    // onClick={this.openModal}
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
+          }
+          >
+          
+          <Modal.Content
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <textarea
+              placeholder="Enter new picture URL"
+              onChange={this.handleChange}
+              value={this.state.inputValue}
               style={{
-                backgroundColor: "var(--kenzieBlue)",
-                color: "var(--kenzieGreen)"
+                width: "85%",
+                border: "none"
               }}
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item text="Change Profile Picture" />
-                <Dropdown.Item text="Modify 'About Me'" />
-              </Dropdown.Menu>
-            </Dropdown>
+              rows="6"
+              autoFocus="true"
+            />
+</Modal.Content>
+
+        </Modal>
           </Card.Content>
         </Card>
       </div>
