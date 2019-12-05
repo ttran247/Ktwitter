@@ -5,7 +5,7 @@ import { domain, handleJsonResponse } from "./constants";
 import { store } from "../index";
 import { jsonHeaders } from "../actionCreators/constants/index";
 
-const url = domain + "/users";
+const URL = domain + "/users";
 
 // export const deleteUser = () => (dispatch, getState) => {
 //   return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
@@ -17,7 +17,7 @@ export const getSingleUser = username => {
       type: GET_USER.START
     });
 
-    return fetch(url + `/${username}`)
+    return fetch(URL + `/${username}`)
       .then(response => handleJsonResponse(response))
       .then(data =>
         dispatch({

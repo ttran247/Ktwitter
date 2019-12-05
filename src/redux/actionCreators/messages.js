@@ -2,14 +2,14 @@ import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
 
-const url = domain + "/messages";
+const URL = domain + "/messages";
 export const getMessageArray = () => {
   return dispatch => {
     dispatch({
       type: GET_MESSAGES.START
     });
 
-    return fetch(url)
+    return fetch(URL)
       .then(response => handleJsonResponse(response))
       .then(data =>
         dispatch({
@@ -35,7 +35,7 @@ export const postMessage = text => {
 
     const token = store.getState().auth.login.result.token;
 
-    return fetch(url, {
+    return fetch(URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -67,9 +67,9 @@ export const deleteMessage = messageId => {
     });
 
     const token = store.getState().auth.login.result.token;
-    const startingURL = url + "/" + messageId;
+    const startingURL = URL + "/" + messageId;
     console.log(token, startingURL);
-    return fetch(url + "/" + messageId, {
+    return fetch(URL + "/" + messageId, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

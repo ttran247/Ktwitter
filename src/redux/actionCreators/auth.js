@@ -1,14 +1,14 @@
 import { domain, jsonHeaders, handleJsonResponse } from "./constants";
 import { LOGIN, LOGOUT } from "../actionTypes";
 
-const url = domain + "/auth";
+const URL = domain + "/auth";
 
 export const login = loginData => dispatch => {
   dispatch({
     type: LOGIN.START
   });
 
-  return fetch(url + "/login", {
+  return fetch(URL + "/login", {
     method: "POST",
     headers: jsonHeaders,
     body: JSON.stringify(loginData)
@@ -32,7 +32,7 @@ export const logout = () => (dispatch, getState) => {
 
   const token = getState().auth.login.result.token;
 
-  return fetch(url + "/logout", {
+  return fetch(URL + "/logout", {
     method: "GET",
     headers: { Authorization: "Bearer " + token, ...jsonHeaders }
   })
