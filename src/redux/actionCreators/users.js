@@ -1,12 +1,11 @@
 import { GET_USER, DELETE_USER } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
-import { url } from "inspector";
 
 const url = domain + "/users";
 
-export const deleteUser = () => (dispatch, getState) => {
-  return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
-};
+// export const deleteUser = () => (dispatch, getState) => {
+//   return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
+// };
 
 export const getSingleUser = username => {
   return dispatch => {
@@ -36,9 +35,9 @@ export const deleteUser = () => (dispatch, getState) => {
     type: DELETE_USER.START
   });
   const username = getState().auth.login.result.username;
-  const token = store.getState().auth.login.result.token;
-  const startingURL = url + "/" + messageId;
-  console.log(token, startingURL, username);
+  const token = getState().auth.login.result.token;
+  // const startingURL = url + "/" + messageId;
+  console.log(token, username);
   return fetch(url + "/" + username, {
     method: "DELETE",
     headers: {

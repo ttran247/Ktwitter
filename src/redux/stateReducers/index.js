@@ -13,4 +13,3 @@ export default history =>
     messages: combineReducers(messages),
     likes: combineReducers(likes)
   });
-export { default as deleteUser } from "./deleteUser";

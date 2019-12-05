@@ -11,4 +11,4 @@ export { default as DeleteUserButton } from "./DeleteUserButton";
 
 // components from other packages
 export { Switch, Route, Link } from "react-router-dom";
-export { Spinner } from "semantic-ui-react";
+export { default as Spinner } from "react-spinkit";
