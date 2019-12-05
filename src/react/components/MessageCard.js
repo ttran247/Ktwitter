@@ -3,7 +3,7 @@ import { addLike, getSingleUser } from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label } from "semantic-ui-react";
-import "./MessageCard.css";
+import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
 import { store } from "../../redux";
 
