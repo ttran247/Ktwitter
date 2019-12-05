@@ -1,5 +1,5 @@
 import React from "react";
-import { addLike, getSingleUser,deleteLike } from "../../redux/actionCreators";
+import { addLike, getSingleUser, deleteLike } from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label } from "semantic-ui-react";
@@ -13,49 +13,51 @@ class MessageCard extends React.Component {
 
     this.state = {
       user: {},
-      postLiked: false,
-      
+      postLiked: false
     };
   }
 
   addLike = () => {
     this.props.addLike(this.props.id);
-    this.setState({postLiked:true})
+    this.setState({ postLiked: true });
   };
 
   deleteLike = () => {
     this.props.deleteLike(this.state.likedId);
-    this.setState({postLiked:false})
-  }
-
-  componentDidMount = () => {
-    this.props.getUser(this.props.username);
-    this.setLikeStatus()
+    this.setState({ postLiked: false });
   };
 
-  componentDidUpdate = previousProps => {
-    if (this.props.user && previousProps.user !== this.props.user) {
-      this.setState({ user: this.props.user });
+  componentDidMount = () => {
+    this.setLikeStatus();
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.users && this.state.user === {}) {
+      this.getUser();
     }
+  };
+
+  getUser = () => {
+    this.props.users.forEach(user => {
+      if (user.username === this.props.username) {
+        this.setState({ user: user });
+        return;
+      }
+    });
   };
 
   setLikeStatus = () => {
-    const user = store.getState().auth.login.result.username
-    const likesArray = this.props.likes
-    for(let i=0; i<likesArray.length; i++) {
-      console.log(likesArray[i].id)
-      if(user===likesArray[i].username){
-        this.setState({postLiked:true,likedId:likesArray[i].id})
-        break
-      }else {
-         continue 
+    const user = store.getState().auth.login.result.username;
+    const likesArray = this.props.likes;
+    for (let i = 0; i < likesArray.length; i++) {
+      if (user === likesArray[i].username) {
+        this.setState({ postLiked: true, likedId: likesArray[i].id });
+        break;
+      } else {
+        continue;
       }
-
     }
-
-
   };
-
 
   render() {
     let { user } = this.state;
@@ -79,7 +81,17 @@ class MessageCard extends React.Component {
           <p>{this.props.date}</p>
           <div id="messageCard-buttons">
             <Button as="div" labelPosition="right">
-              <Button onClick = {this.state.postLiked===true? this.deleteLike: this.addLike} icon style={this.state.postLiked===false?{backgroundColor: "var(--kenzieGreen)" }:{backgroundColor:"red"}}>
+              <Button
+                onClick={
+                  this.state.postLiked === true ? this.deleteLike : this.addLike
+                }
+                icon
+                style={
+                  this.state.postLiked === false
+                    ? { backgroundColor: "var(--kenzieGreen)" }
+                    : { backgroundColor: "red" }
+                }
+              >
                 <Icon
                   name="thumbs up outline"
                   style={{ color: "var(--kenzieBlue)" }}
@@ -87,6 +99,7 @@ class MessageCard extends React.Component {
                 Like
               </Button>
               <Label as="a" basic pointing="left">
+                {this.props.likes.length}
               </Label>
             </Button>
             {isUsersMessage && (
@@ -120,7 +133,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.getSingleUser.user
+    users: state.user.getAllUsers.users
   };
 };
 

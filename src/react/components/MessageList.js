@@ -1,6 +1,6 @@
 import React from "react";
 import MessageCard from "./MessageCard";
-import { getMessageArray } from "../../redux/actionCreators";
+import { getAllUsers, getMessages } from "../../redux/actionCreators";
 import { connect } from "react-redux";
 import "./MessageList.css";
 
@@ -15,12 +15,16 @@ class MessageList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getMessageArray();
+    this.props.getMessages();
+    this.props.getAllUsers();
   }
 
   componentDidUpdate(previousProps) {
     if (this.props.messages && previousProps.messages !== this.props.messages) {
       this.setState({ messages: this.props.messages, loading: false });
+    }
+    if (this.props.users && previousProps.users !== this.props.users) {
+      this.setState({ users: this.props.users });
     }
   }
 
@@ -32,9 +36,10 @@ class MessageList extends React.Component {
           const date = new Date(message.createdAt);
           return (
             <MessageCard
-              username={
+              displayName={
                 message.displayName ? message.displayName : message.username
               }
+              username={message.username}
               likes={message.likes}
               text={message.text}
               date={`${date.toLocaleTimeString(navigator.language, {
@@ -46,7 +51,6 @@ class MessageList extends React.Component {
               })}`}
               key={message.id}
               id={message.id}
-              
             />
           );
         })}
@@ -57,14 +61,18 @@ class MessageList extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getMessageArray: () => {
-      dispatch(getMessageArray());
+    getMessages: () => {
+      dispatch(getMessages());
+    },
+    getAllUsers: () => {
+      dispatch(getAllUsers());
     }
   };
 };
 const mapStateToProps = state => {
   return {
-    messages: state.messages.getMessageFeed.messages
+    messages: state.messages.getMessageFeed.messages,
+    users: state.user.getAllUsers.users
   };
 };
 
