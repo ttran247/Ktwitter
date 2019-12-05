@@ -15,3 +15,4 @@ export const ADD_LIKE = createActionTypes("ADD_LIKE");
 export const POST_MESSAGE = createActionTypes("POST_MESSAGE");
 export const DELETE_LIKE = createActionTypes("DELETE_LIKE");
 export const DELETE_MESSAGE = createActionTypes("DELETE_MESSAGE");
+export const DELETE_USER = createActionTypes("DELETE_USER");

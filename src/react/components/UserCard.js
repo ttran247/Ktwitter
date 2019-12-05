@@ -3,6 +3,7 @@ import { Card, Image, Popup, Dropdown } from "semantic-ui-react";
 import { Button } from "semantic-ui-react";
 import "./UserCard.css";
 import { fakeUser } from "../../mockUserData";
+import { DeleteUserButton } from ".";
 
 class UserCard extends React.Component {
   render() {
@@ -71,6 +72,8 @@ class UserCard extends React.Component {
                 <Dropdown.Item text="Modify 'About Me'" />
               </Dropdown.Menu>
             </Dropdown>
+            <DeleteUserButton />
+            <DeleteUserButton username={this.props.username} />
           </Card.Content>
         </Card>
       </div>
