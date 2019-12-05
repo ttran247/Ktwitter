@@ -4,7 +4,7 @@ import { store } from "../index";
 
 const url = domain + "/messages";
 
-export const getMessageArray = () => {
+export const getMessages = () => {
   return dispatch => {
     dispatch({
       type: GET_MESSAGES.START
