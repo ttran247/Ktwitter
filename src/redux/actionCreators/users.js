@@ -7,6 +7,10 @@ import { jsonHeaders } from "../actionCreators/constants/index";
 
 const URL = domain + "/users";
 
+// export const deleteUser = () => (dispatch, getState) => {
+//   return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
+// };
+
 export const getSingleUser = username => {
   return dispatch => {
     dispatch({

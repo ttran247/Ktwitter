@@ -28,6 +28,7 @@ class MessageCard extends React.Component {
   };
 
   componentDidMount = () => {
+    this.props.getUser(this.props.username);
     this.setLikeStatus();
   };
 
@@ -103,7 +104,11 @@ class MessageCard extends React.Component {
               </Label>
             </Button>
             {isUsersMessage && (
-              <Button icon style={{ backgroundColor: "var(--kenzieGreen)" }}>
+              <Button
+                onClick={this.deleteMessage}
+                icon
+                style={{ backgroundColor: "var(--kenzieGreen)" }}
+              >
                 <Icon
                   name="trash alternate outline"
                   style={{ color: "var(--kenzieBlue)" }}
