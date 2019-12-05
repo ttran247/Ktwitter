@@ -41,7 +41,7 @@ class MessageList extends React.Component {
               username={
                 message.displayName ? message.displayName : message.username
               }
-              likes={message.likes.length}
+              likes={message.likes}
               text={message.text}
               date={`${date.toLocaleTimeString(navigator.language, {
                 month: "short",
@@ -52,6 +52,7 @@ class MessageList extends React.Component {
               })}`}
               key={message.id}
               id={message.id}
+              
             />
           );
         })}

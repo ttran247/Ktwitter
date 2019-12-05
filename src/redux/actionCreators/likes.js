@@ -2,7 +2,7 @@ import { ADD_LIKE, DELETE_LIKE } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
 
-const URL = domain + "/likes";
+const URL = domain + "/likes/";
 
 export const addLike = messageId => {
   return dispatch => {
@@ -45,7 +45,7 @@ export const deleteLike = likeId => {
     const token = store.getState().auth.login.result.token;
 
     return fetch(URL + `${likeId}`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
         ...jsonHeaders
