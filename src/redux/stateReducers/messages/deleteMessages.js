@@ -1,24 +1,22 @@
-import { GET_MESSAGES } from "../../actionTypes";
+import { DELETE_MESSAGE } from "../../actionTypes";
 
 const initialState = {
-  messages: null,
   loading: false,
   error: null
 };
 
-export const getMessageFeed = (state = initialState, action) => {
+export const deleteMessage = (state = initialState, action) => {
   switch (action.type) {
-    case GET_MESSAGES.START:
+    case DELETE_MESSAGE.START:
       return {
         loading: true,
         error: null
       };
-    case GET_MESSAGES.SUCCESS:
+    case DELETE_MESSAGE.SUCCESS:
       return {
-        messages: action.payload,
         loading: false
       };
-    case GET_MESSAGES.FAIL:
+    case DELETE_MESSAGE.FAIL:
       return {
         loading: false,
         error: action.payload

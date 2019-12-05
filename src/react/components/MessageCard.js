@@ -1,5 +1,5 @@
 import React from "react";
-import { addLike, getSingleUser,deleteLike } from "../../redux/actionCreators";
+import { addLike, getSingleUser, deleteLike } from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label } from "semantic-ui-react";
@@ -13,24 +13,23 @@ class MessageCard extends React.Component {
 
     this.state = {
       user: {},
-      postLiked: false,
-      
+      postLiked: false
     };
   }
 
   addLike = () => {
     this.props.addLike(this.props.id);
-    this.setState({postLiked:true})
+    this.setState({ postLiked: true });
   };
 
   deleteLike = () => {
     this.props.deleteLike(this.state.likedId);
-    this.setState({postLiked:false})
-  }
+    this.setState({ postLiked: false });
+  };
 
   componentDidMount = () => {
     this.props.getUser(this.props.username);
-    this.setLikeStatus()
+    this.setLikeStatus();
   };
 
   componentDidUpdate = previousProps => {
@@ -40,22 +39,18 @@ class MessageCard extends React.Component {
   };
 
   setLikeStatus = () => {
-    const user = store.getState().auth.login.result.username
-    const likesArray = this.props.likes
-    for(let i=0; i<likesArray.length; i++) {
-      console.log(likesArray[i].id)
-      if(user===likesArray[i].username){
-        this.setState({postLiked:true,likedId:likesArray[i].id})
-        break
-      }else {
-         continue 
+    const user = store.getState().auth.login.result.username;
+    const likesArray = this.props.likes;
+    for (let i = 0; i < likesArray.length; i++) {
+      console.log(likesArray[i].id);
+      if (user === likesArray[i].username) {
+        this.setState({ postLiked: true, likedId: likesArray[i].id });
+        break;
+      } else {
+        continue;
       }
-
     }
-
-
   };
-
 
   render() {
     let { user } = this.state;
@@ -79,18 +74,31 @@ class MessageCard extends React.Component {
           <p>{this.props.date}</p>
           <div id="messageCard-buttons">
             <Button as="div" labelPosition="right">
-              <Button onClick = {this.state.postLiked===true? this.deleteLike: this.addLike} icon style={this.state.postLiked===false?{backgroundColor: "var(--kenzieGreen)" }:{backgroundColor:"red"}}>
+              <Button
+                onClick={
+                  this.state.postLiked === true ? this.deleteLike : this.addLike
+                }
+                icon
+                style={
+                  this.state.postLiked === false
+                    ? { backgroundColor: "var(--kenzieGreen)" }
+                    : { backgroundColor: "red" }
+                }
+              >
                 <Icon
                   name="thumbs up outline"
                   style={{ color: "var(--kenzieBlue)" }}
                 />
                 Like
               </Button>
-              <Label as="a" basic pointing="left">
-              </Label>
+              <Label as="a" basic pointing="left"></Label>
             </Button>
             {isUsersMessage && (
-              <Button icon style={{ backgroundColor: "var(--kenzieGreen)" }}>
+              <Button
+                onClick={this.deleteMessage}
+                icon
+                style={{ backgroundColor: "var(--kenzieGreen)" }}
+              >
                 <Icon
                   name="trash alternate outline"
                   style={{ color: "var(--kenzieBlue)" }}

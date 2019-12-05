@@ -29,7 +29,7 @@
 }
 
 #logo {
-  background-image: url("../../img/kenzie-logo.png");
+  background-image: URL("../../img/kenzie-logo.png");
   background-size: cover;
   background-color: white;
   padding-bottom: 10px;

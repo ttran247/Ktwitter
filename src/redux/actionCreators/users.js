@@ -1,11 +1,15 @@
 import { GET_USER } from "../actionTypes";
 import { CHANGE_PICTURE } from "../actionTypes";
-import { UPDATE_ABOUT } from "../actionTypes"
+import { UPDATE_ABOUT } from "../actionTypes";
 import { domain, handleJsonResponse } from "./constants";
-import { store } from "../index"
-import { jsonHeaders } from "../actionCreators/constants/index"
+import { store } from "../index";
+import { jsonHeaders } from "../actionCreators/constants/index";
 
 const URL = domain + "/users";
+
+// export const deleteUser = () => (dispatch, getState) => {
+//   return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
+// };
 
 export const getSingleUser = username => {
   return dispatch => {
@@ -24,30 +28,30 @@ export const getSingleUser = username => {
       .catch(error =>
         dispatch({
           type: GET_USER.FAIL,
-          payload: error 
+          payload: error
         })
       );
   };
 };
 
 export const changePicture = picture => {
-  const username = store.getState().auth.login.result.username
-  const token = store.getState().auth.login.result.token
+  const username = store.getState().auth.login.result.username;
+  const token = store.getState().auth.login.result.token;
   return dispatch => {
     dispatch({
       type: CHANGE_PICTURE.START
     });
 
     return fetch(URL + `/${username}/picture`, {
-    method: "PUT",
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         ...jsonHeaders
       },
-    body: JSON.stringify({
+      body: JSON.stringify({
         picture: picture
+      })
     })
-})  
       .then(response => handleJsonResponse(response))
       .then(data =>
         dispatch({
@@ -58,30 +62,30 @@ export const changePicture = picture => {
       .catch(error =>
         dispatch({
           type: CHANGE_PICTURE.FAIL,
-          payload: error 
+          payload: error
         })
       );
   };
 };
 
 export const updateAbout = data => {
-  const username = store.getState().auth.login.result.username
-  const token = store.getState().auth.login.result.token
+  const username = store.getState().auth.login.result.username;
+  const token = store.getState().auth.login.result.token;
   return dispatch => {
     dispatch({
       type: UPDATE_ABOUT.START
     });
 
     return fetch(URL + `/${username}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      ...jsonHeaders
-    },
-    body: JSON.stringify({
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...jsonHeaders
+      },
+      body: JSON.stringify({
         data: data
+      })
     })
-})  
       .then(response => handleJsonResponse(response))
       .then(data =>
         dispatch({
@@ -92,7 +96,7 @@ export const updateAbout = data => {
       .catch(error =>
         dispatch({
           type: UPDATE_ABOUT.FAIL,
-          payload: error 
+          payload: error
         })
       );
   };

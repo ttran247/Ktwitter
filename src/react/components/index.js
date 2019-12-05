@@ -7,6 +7,7 @@ export { default as NewMessageEntry } from "./NewMessageEntry";
 export { default as MessageList } from "./MessageList";
 export { default as RegistrationForm } from "./RegistrationForm";
 export { default as PageHeader } from "./PageHeader";
+export { default as DeleteUserButton } from "./DeleteUserButton";
 
 // components from other packages
 export { Switch, Route, Link } from "react-router-dom";
