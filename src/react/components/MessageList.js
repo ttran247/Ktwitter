@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   return {
-    messages: state.messages.getMessageFeed.messages,
+    messages: state.messages.allMessages.messages,
     users: state.user.getAllUsers.users
   };
 };

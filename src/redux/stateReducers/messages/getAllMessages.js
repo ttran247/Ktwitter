@@ -6,7 +6,7 @@ const initialState = {
   error: null
 };
 
-export const getMessageFeed = (state = initialState, action) => {
+export const allMessages = (state = initialState, action) => {
   switch (action.type) {
     case GET_MESSAGES.START:
       return {

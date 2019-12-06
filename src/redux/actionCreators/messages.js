@@ -1,4 +1,9 @@
-import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
+import {
+  GET_MESSAGES,
+  POST_MESSAGE,
+  DELETE_MESSAGE,
+  GET_SINGLE_MESSAGE
+} from "../actionTypes";
 import {
   domain,
   handleJsonResponse,
@@ -30,6 +35,29 @@ export const getMessages = () => {
           payload: error
         })
       );
+  };
+};
+
+export const getSingleMessage = messageId => {
+  return dispatch => {
+    dispatch({
+      type: GET_SINGLE_MESSAGE.START
+    });
+
+    fetch(URL + `/${messageId}`)
+      .then(response => handleJsonResponse(response))
+      .then(data => {
+        return dispatch({
+          type: GET_SINGLE_MESSAGE.SUCCESS,
+          payload: data.message
+        });
+      })
+      .catch(error => {
+        return dispatch({
+          type: GET_SINGLE_MESSAGE.FAIL,
+          payload: error
+        });
+      });
   };
 };
 
