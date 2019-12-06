@@ -1,15 +1,16 @@
-import { GET_USER, GET_ALL_USERS } from "../actionTypes";
-import { CHANGE_PICTURE } from "../actionTypes";
-import { UPDATE_ABOUT } from "../actionTypes";
+import {
+  GET_USER,
+  GET_ALL_USERS,
+  DELETE_USER,
+  LOGOUT,
+  CHANGE_PICTURE,
+  UPDATE_ABOUT
+} from "../actionTypes";
 import { domain, handleJsonResponse } from "./constants";
 import { store } from "../index";
 import { jsonHeaders } from "../actionCreators/constants/index";
 
 const URL = domain + "/users";
-
-// export const deleteUser = () => (dispatch, getState) => {
-//   return Promise.reject(dispatch({ type: DELETE_USER.FAIL, payload: err }));
-// };
 
 export const getSingleUser = username => {
   return dispatch => {
@@ -122,5 +123,35 @@ export const getAllUsers = () => {
           payload: error
         })
       );
+  };
+};
+export const deleteUser = username => {
+  return dispatch => {
+    dispatch({
+      type: DELETE_USER.START
+    });
+
+    return fetch(URL + `/${username}`)
+      .then(response => handleJsonResponse(response))
+      .then(data => {
+        dispatch({
+          type: DELETE_USER.SUCCESS
+        });
+        dispatch({
+          type: LOGOUT.SUCCESS
+        });
+      })
+      .catch(error => {
+        if (error.statusCode === 401) {
+          dispatch({
+            type: LOGOUT.SUCCESS
+          });
+        } else {
+          dispatch({
+            type: DELETE_USER.FAIL,
+            payload: error
+          });
+        }
+      });
   };
 };
