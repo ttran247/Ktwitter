@@ -58,6 +58,7 @@ class NewMessageEntry extends React.Component {
         <Modal
           trigger={
             <Button
+              icon
               animated
               style={{
                 backgroundColor: "var(--kenzieBlue)",
@@ -66,7 +67,10 @@ class NewMessageEntry extends React.Component {
               }}
               onClick={this.openModal}
             >
-              <Icon name="edit" size="big" />
+              <Button.Content visible>
+                <Icon name="edit" size="big" />
+              </Button.Content>
+              <Button.Content hidden>New Post</Button.Content>
             </Button>
           }
           style={{ width: "40%", height: "30%" }}
