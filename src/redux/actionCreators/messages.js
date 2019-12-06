@@ -38,29 +38,6 @@ export const getMessages = () => {
   };
 };
 
-export const getSingleMessage = messageId => {
-  return dispatch => {
-    dispatch({
-      type: GET_SINGLE_MESSAGE.START
-    });
-
-    fetch(URL + `/${messageId}`)
-      .then(response => handleJsonResponse(response))
-      .then(data => {
-        return dispatch({
-          type: GET_SINGLE_MESSAGE.SUCCESS,
-          payload: data.message
-        });
-      })
-      .catch(error => {
-        return dispatch({
-          type: GET_SINGLE_MESSAGE.FAIL,
-          payload: error
-        });
-      });
-  };
-};
-
 export const postMessage = text => {
   return dispatch => {
     dispatch({

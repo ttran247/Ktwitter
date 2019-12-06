@@ -20,4 +20,3 @@ export const GET_ALL_USERS = createActionTypes("GET_ALL_USERS");
 export const DELETE_MESSAGE = createActionTypes("DELETE_MESSAGE");
 export const DELETE_USER = createActionTypes("DELETE_USER");
 export const CREATE_USER = createActionTypes("CREATE_USER");
-export const GET_SINGLE_MESSAGE = createActionTypes("GET_SINGLE_MESSAGE");
