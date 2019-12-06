@@ -2,7 +2,7 @@ import React from "react";
 import { addLike, deleteLike } from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Image, Button, Icon, Label } from "semantic-ui-react";
+import { Image, Button, Icon, Label, Popup } from "semantic-ui-react";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
 import { store, deleteMessage, getMessages } from "../../redux";
@@ -14,7 +14,8 @@ class MessageCard extends React.Component {
     this.state = {
       user: {},
       likes: this.props.likes,
-      postLiked: false
+      postLiked: false,
+      showPopup: false
     };
   }
 
@@ -36,16 +37,6 @@ class MessageCard extends React.Component {
     this.props.deleteMessage(this.props.id);
   };
 
-  componentDidMount = () => {
-    this.setLikeStatus();
-  };
-
-  componentDidUpdate = () => {
-    if (this.props.users && this.state.user === {}) {
-      this.getUser();
-    }
-  };
-
   getUser = () => {
     this.props.users.forEach(user => {
       if (user.username === this.props.username) {
@@ -65,6 +56,25 @@ class MessageCard extends React.Component {
       } else {
         continue;
       }
+    }
+  };
+
+  handlePopupClick = () => {
+    let { showPopup } = this.state;
+    if (showPopup) {
+      this.setState({ showPopup: false });
+    } else {
+      this.setState({ showPopup: true });
+    }
+  };
+
+  componentDidMount = () => {
+    this.setLikeStatus();
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.users && this.state.user === {}) {
+      this.getUser();
     }
   };
 
@@ -98,12 +108,19 @@ class MessageCard extends React.Component {
                 style={
                   this.state.postLiked === false
                     ? { backgroundColor: "var(--kenzieGreen)" }
-                    : { backgroundColor: "red" }
+                    : {
+                        backgroundColor: "var(--kenzieBlue)",
+                        color: "var(--kenzieGreen)"
+                      }
                 }
               >
                 <Icon
                   name="thumbs up outline"
-                  style={{ color: "var(--kenzieBlue)" }}
+                  style={
+                    this.state.postLiked === false
+                      ? { color: "var(--kenzieBlue)" }
+                      : { color: "var(--kenzieGreen)" }
+                  }
                 />
                 Like
               </Button>
@@ -112,16 +129,40 @@ class MessageCard extends React.Component {
               </Label>
             </Button>
             {isUsersMessage && (
-              <Button
-                onClick={this.deleteMessage}
-                icon
-                style={{ backgroundColor: "var(--kenzieGreen)" }}
+              <Popup
+                open={this.state.showPopup}
+                trigger={
+                  <Button
+                    onClick={this.handlePopupClick}
+                    icon
+                    style={{ backgroundColor: "var(--kenzieGreen)" }}
+                  >
+                    <Icon
+                      name="trash alternate outline"
+                      style={{ color: "var(--kenzieBlue)" }}
+                    />
+                  </Button>
+                }
               >
-                <Icon
-                  name="trash alternate outline"
-                  style={{ color: "var(--kenzieBlue)" }}
-                />
-              </Button>
+                <Popup.Content>
+                  <Button
+                    icon
+                    size="tiny"
+                    style={{ backgroundColor: "white" }}
+                    onClick={this.deleteMessage}
+                  >
+                    <Icon name="check" style={{ color: "green" }} />
+                  </Button>
+                  <Button
+                    icon
+                    size="tiny"
+                    style={{ backgroundColor: "white" }}
+                    onClick={this.handlePopupClick}
+                  >
+                    <Icon name="x" style={{ color: "red" }} />
+                  </Button>
+                </Popup.Content>
+              </Popup>
             )}
           </div>
         </div>
