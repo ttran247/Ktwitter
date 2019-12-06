@@ -11,7 +11,7 @@ class Profile extends React.Component {
         <div id="profileContainer">
           <PageHeader title="Profile" />
           <div id="mainContainer">
-            <UserCard username={this.props.match.params.username} />
+            <UserCard username= {this.props.match.params.username}/>
             <div id="featureContainer">
               <ProfileFeed username={this.props.match.params.username} />
             </div>

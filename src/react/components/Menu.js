@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "../components";
+import { Link } from ".";
 import "./Menu.css";
 import { withAsyncAction } from "../HOCs";
 import { Icon } from "semantic-ui-react";

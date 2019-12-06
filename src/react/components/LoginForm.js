@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "../components";
+import { Spinner } from ".";
 import { withAsyncAction } from "../HOCs";
 import "./LoginForm.css";
 import { Form, Button, Icon } from "semantic-ui-react";
@@ -55,6 +55,7 @@ class LoginForm extends React.Component {
               </Button>
               <div>{loading && <Spinner name="circle" color="blue" />}</div>
             </div>
+
             <div>
               {error && <p style={{ color: "red" }}>{error.message}</p>}
             </div>

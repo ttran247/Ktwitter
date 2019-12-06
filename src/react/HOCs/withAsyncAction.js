@@ -1,4 +1,4 @@
-import { connect } from "../HOCs";
+import { connect } from ".";
 import * as actionCreators from "../../redux";
 
 const withAsyncAction = (reducerName, actionCreatorName) => component => {

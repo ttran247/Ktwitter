@@ -32,17 +32,25 @@ class MessageCard extends React.Component {
     this.setLikeStatus();
   };
 
-  componentDidUpdate = previousProps => {
-    if (this.props.user && previousProps.user !== this.props.user) {
-      this.setState({ user: this.props.user });
+  componentDidUpdate = () => {
+    if (this.props.users && this.state.user === {}) {
+      this.getUser();
     }
+  };
+
+  getUser = () => {
+    this.props.users.forEach(user => {
+      if (user.username === this.props.username) {
+        this.setState({ user: user });
+        return;
+      }
+    });
   };
 
   setLikeStatus = () => {
     const user = store.getState().auth.login.result.username;
     const likesArray = this.props.likes;
     for (let i = 0; i < likesArray.length; i++) {
-      console.log(likesArray[i].id);
       if (user === likesArray[i].username) {
         this.setState({ postLiked: true, likedId: likesArray[i].id });
         break;
@@ -91,7 +99,9 @@ class MessageCard extends React.Component {
                 />
                 Like
               </Button>
-              <Label as="a" basic pointing="left"></Label>
+              <Label as="a" basic pointing="left">
+                {this.props.likes.length}
+              </Label>
             </Button>
             {isUsersMessage && (
               <Button
@@ -128,7 +138,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.getSingleUser.user
+    users: state.user.getAllUsers.users
   };
 };
 

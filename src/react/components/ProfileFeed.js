@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
-import { getMessageArray } from "../../redux";
+import { getMessages } from "../../redux";
 import { connect } from "react-redux";
 import "./ProfileFeed.css";
 import MessageCard from "./MessageCard";
@@ -74,7 +74,7 @@ class ProfileFeed extends React.Component {
                         ? message.displayName
                         : message.username
                     }
-                    likes={message.likes.length}
+                    likes={message.likes}
                     text={message.text}
                     date={`${new Date(message.createdAt).toLocaleTimeString(
                       navigator.language,
@@ -102,7 +102,7 @@ class ProfileFeed extends React.Component {
                         ? message.displayName
                         : message.username
                     }
-                    likes={message.likes.length}
+                    likes={message.likes}
                     text={message.text}
                     date={`${new Date(message.createdAt).toLocaleTimeString(
                       navigator.language,
@@ -129,7 +129,7 @@ class ProfileFeed extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     getMessages: () => {
-      dispatch(getMessageArray());
+      dispatch(getMessages());
     }
   };
 };

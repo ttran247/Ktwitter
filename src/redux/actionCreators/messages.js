@@ -2,8 +2,9 @@ import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
 
-const URL = domain + "/messages";
-export const getMessageArray = () => {
+const url = domain + "/messages";
+
+export const getMessages = () => {
   return dispatch => {
     dispatch({
       type: GET_MESSAGES.START

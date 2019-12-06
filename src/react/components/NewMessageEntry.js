@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postMessage, getMessageArray } from "../../redux/actionCreators";
+import { postMessage, getMessages } from "../../redux/actionCreators";
 import { Button, Icon, Modal } from "semantic-ui-react";
 import "./NewMessageEntry.css";
 
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(postMessage(text));
     },
     reloadMessages: () => {
-      dispatch(getMessageArray());
+      dispatch(getMessages());
     }
   };
 };

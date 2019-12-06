@@ -1,4 +1,4 @@
-import { GET_USER } from "../actionTypes";
+import { GET_USER, GET_ALL_USERS } from "../actionTypes";
 import { CHANGE_PICTURE } from "../actionTypes";
 import { UPDATE_ABOUT } from "../actionTypes";
 import { domain, handleJsonResponse } from "./constants";
@@ -96,6 +96,29 @@ export const updateAbout = data => {
       .catch(error =>
         dispatch({
           type: UPDATE_ABOUT.FAIL,
+          payload: error
+        })
+      );
+  };
+};
+
+export const getAllUsers = () => {
+  return dispatch => {
+    dispatch({
+      type: GET_ALL_USERS.START
+    });
+
+    return fetch(URL)
+      .then(response => handleJsonResponse(response))
+      .then(data =>
+        dispatch({
+          type: GET_ALL_USERS.SUCCESS,
+          payload: data.users
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: GET_ALL_USERS.FAIL,
           payload: error
         })
       );
