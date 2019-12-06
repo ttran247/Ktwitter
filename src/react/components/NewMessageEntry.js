@@ -32,6 +32,8 @@ class NewMessageEntry extends React.Component {
       this.state.inputValue.replace(/\s/g, "") !== ""
     ) {
       this.props.postMessage(this.state.inputValue);
+      this.setState({ inputValue: "" });
+      this.closeModal();
     } else {
       this.setState({
         inputValue: "",
@@ -99,14 +101,7 @@ class NewMessageEntry extends React.Component {
                 color: "var(--kenzieGreen)",
                 textAlign: "center"
               }}
-              onClick={() => {
-                this.postNewMessage();
-                if (this.state.inputValue !== "") {
-                  this.setState({ inputValue: "" });
-                  this.closeModal();
-                  this.props.reloadMessages();
-                }
-              }}
+              onClick={this.postNewMessage}
             >
               <Button.Content visible>
                 <Icon name="comments" />

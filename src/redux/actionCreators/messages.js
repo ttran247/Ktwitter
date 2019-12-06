@@ -51,11 +51,11 @@ export const postMessage = text => {
     })
       .then(response => handleJsonResponse(response))
       .then(data => {
-        console.log(data);
         dispatch({
           type: POST_MESSAGE.SUCCESS,
           payload: data
         });
+        return dispatch(getMessages());
       })
       .catch(error => {
         handle401Error(error);
@@ -83,11 +83,12 @@ export const deleteMessage = messageId => {
       }
     })
       .then(response => handleJsonResponse(response))
-      .then(data =>
+      .then(data => {
         dispatch({
           type: DELETE_MESSAGE.SUCCESS
-        })
-      )
+        });
+        return dispatch(getMessages());
+      })
       .catch(error => {
         dispatch({
           type: DELETE_MESSAGE.FAIL,
