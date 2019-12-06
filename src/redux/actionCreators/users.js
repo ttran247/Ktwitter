@@ -2,13 +2,15 @@ import {
   GET_USER,
   GET_ALL_USERS,
   DELETE_USER,
-  LOGOUT,
   CHANGE_PICTURE,
-  UPDATE_ABOUT
+  UPDATE_ABOUT,
+  CREATE_USER,
+  LOGOUT
 } from "../actionTypes";
-import { domain, handleJsonResponse } from "./constants";
+import { domain, handleJsonResponse, handle401Error } from "./constants";
 import { store } from "../index";
 import { jsonHeaders } from "../actionCreators/constants/index";
+import { login, logout } from "./auth";
 
 const URL = domain + "/users";
 
@@ -126,32 +128,67 @@ export const getAllUsers = () => {
   };
 };
 export const deleteUser = username => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: DELETE_USER.START
     });
 
-    return fetch(URL + `/${username}`)
+    const token = getState().auth.login.result.token;
+
+    return fetch(URL + `/${username}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...jsonHeaders
+      }
+    })
       .then(response => handleJsonResponse(response))
-      .then(data => {
+      .then(() => {
         dispatch({
-          type: DELETE_USER.SUCCESS
+          type: LOGOUT.SUCCESS,
+          payload: { statusCode: 200 }
         });
-        dispatch({
-          type: LOGOUT.SUCCESS
+        return dispatch({
+          type: DELETE_USER.SUCCESS
         });
       })
       .catch(error => {
-        if (error.statusCode === 401) {
-          dispatch({
-            type: LOGOUT.SUCCESS
-          });
-        } else {
-          dispatch({
-            type: DELETE_USER.FAIL,
-            payload: error
-          });
-        }
+        handle401Error(error);
+        return dispatch({
+          type: DELETE_USER.FAIL,
+          payload: error
+        });
+      });
+  };
+};
+
+export const createNewUser = (username, displayName, password) => {
+  return dispatch => {
+    dispatch({
+      type: CREATE_USER.START
+    });
+
+    return fetch(URL, {
+      method: "POST",
+      headers: { ...jsonHeaders },
+      body: JSON.stringify({
+        username: username,
+        displayName: displayName,
+        password: password
+      })
+    })
+      .then(response => handleJsonResponse(response))
+      .then(data => {
+        dispatch({
+          type: CREATE_USER.SUCCESS
+        });
+        return dispatch(login({ username: username, password: password }));
+      })
+      .catch(error => {
+        return dispatch({
+          type: CREATE_USER.FAIL,
+          payload: error
+        });
       });
   };
 };
