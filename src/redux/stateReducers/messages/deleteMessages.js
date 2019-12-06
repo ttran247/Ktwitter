@@ -1,4 +1,4 @@
-import { DELETE_MESSAGE } from "../../actionTypes";
+import { DELETE_MESSAGE, LOGOUT } from "../../actionTypes";
 
 const initialState = {
   loading: false,
@@ -14,12 +14,17 @@ export const deleteMessage = (state = initialState, action) => {
       };
     case DELETE_MESSAGE.SUCCESS:
       return {
+        ...state,
         loading: false
       };
     case DELETE_MESSAGE.FAIL:
       return {
         loading: false,
         error: action.payload
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState
       };
     default:
       return state;

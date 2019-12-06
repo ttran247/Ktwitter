@@ -1,4 +1,4 @@
-import { DELETE_LIKE } from "../../actionTypes";
+import { DELETE_LIKE, LOGOUT } from "../../actionTypes";
 
 const initialState = {
   loading: false,
@@ -14,6 +14,7 @@ export const deleteLike = (state = initialState, action) => {
       };
     case DELETE_LIKE.SUCCESS:
       return {
+        ...state,
         loading: false
       };
 
@@ -21,6 +22,10 @@ export const deleteLike = (state = initialState, action) => {
       return {
         loading: false,
         error: action.payload
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState
       };
     default:
       return state;
