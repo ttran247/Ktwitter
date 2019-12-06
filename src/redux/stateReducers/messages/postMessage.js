@@ -1,4 +1,4 @@
-import { POST_MESSAGE } from "../../actionTypes";
+import { POST_MESSAGE, LOGOUT } from "../../actionTypes";
 
 const initialState = {
   result: null,
@@ -25,6 +25,10 @@ export const postMessage = (state = initialState, action) => {
         result: null,
         loading: false,
         error: action.payload
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState
       };
     default:
       return state;
