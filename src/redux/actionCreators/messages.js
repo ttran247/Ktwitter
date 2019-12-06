@@ -1,8 +1,13 @@
 import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
-import { domain, handleJsonResponse, jsonHeaders } from "./constants";
+import {
+  domain,
+  handleJsonResponse,
+  jsonHeaders,
+  handle401Error
+} from "./constants";
 import { store } from "../index";
 
-const url = domain + "/messages";
+const URL = domain + "/messages";
 
 export const getMessages = () => {
   return dispatch => {
@@ -52,12 +57,13 @@ export const postMessage = text => {
           payload: data
         });
       })
-      .catch(error =>
-        dispatch({
+      .catch(error => {
+        handle401Error(error);
+        return dispatch({
           type: POST_MESSAGE.FAIL,
           payload: error
-        })
-      );
+        });
+      });
   };
 };
 
@@ -68,9 +74,8 @@ export const deleteMessage = messageId => {
     });
 
     const token = store.getState().auth.login.result.token;
-    const startingURL = URL + "/" + messageId;
-    console.log(token, startingURL);
-    return fetch(URL + "/" + messageId, {
+
+    return fetch(URL + `/${messageId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,7 +89,6 @@ export const deleteMessage = messageId => {
         })
       )
       .catch(error => {
-        console.log(error);
         dispatch({
           type: DELETE_MESSAGE.FAIL,
           payload: error

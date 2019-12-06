@@ -1,11 +1,11 @@
 import React from "react";
-import { addLike, getSingleUser, deleteLike } from "../../redux/actionCreators";
+import { addLike, deleteLike } from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label } from "semantic-ui-react";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
-import { store } from "../../redux";
+import { store, deleteMessage, getMessages } from "../../redux";
 
 class MessageCard extends React.Component {
   constructor(props) {
@@ -27,8 +27,11 @@ class MessageCard extends React.Component {
     this.setState({ postLiked: false });
   };
 
+  deleteMessage = () => {
+    this.props.deleteMessage(this.props.id);
+  };
+
   componentDidMount = () => {
-    this.props.getUser(this.props.username);
     this.setLikeStatus();
   };
 
@@ -62,8 +65,8 @@ class MessageCard extends React.Component {
 
   render() {
     let { user } = this.state;
-    const currentUser = store.getState().auth.login.result.username;
-    const isUsersMessage = currentUser === this.props.username;
+    let { currentUser, username } = this.props;
+    const isUsersMessage = currentUser === username;
     return (
       <div id="messageCard-card">
         <div id="messageCard-pic">
@@ -75,8 +78,8 @@ class MessageCard extends React.Component {
           />
         </div>
         <div id="messageCard-space">
-          <Link to={`../profile/${this.props.username}`}>
-            <h3>{this.props.username}</h3>
+          <Link to={`../profile/${username}`}>
+            <h3>{this.props.displayName}</h3>
           </Link>
           {this.props.text}
           <p>{this.props.date}</p>
@@ -127,18 +130,22 @@ const mapDispatchToProps = dispatch => {
     addLike: messageId => {
       dispatch(addLike(messageId));
     },
-    getUser: username => {
-      dispatch(getSingleUser(username));
-    },
     deleteLike: likeId => {
       dispatch(deleteLike(likeId));
+    },
+    deleteMessage: messageId => {
+      dispatch(deleteMessage(messageId));
+    },
+    getMessages: () => {
+      dispatch(getMessages());
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    users: state.user.getAllUsers.users
+    users: state.user.getAllUsers.users,
+    currentUser: state.auth.login.result.username
   };
 };
 
