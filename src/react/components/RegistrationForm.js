@@ -1,11 +1,7 @@
 import React from "react";
 import { Form, Button, Icon } from "semantic-ui-react";
-import { withRouter } from "react-router";
-import {
-  domain,
-  jsonHeaders,
-  handleJsonResponse
-} from "../../redux/actionCreators/constants";
+import { connect } from "react-redux";
+import { createNewUser } from "../../redux";
 import "./RegistrationForm.css";
 
 class RegistrationForm extends React.Component {
@@ -74,7 +70,7 @@ class RegistrationForm extends React.Component {
         error:
           "Password values did not match. Please enter a password and confirm again."
       });
-      document.getElementById("password")[0].focus();
+      document.getElementsByName("password")[0].focus();
       return false;
     }
     this.setState({ error: null });
@@ -83,35 +79,16 @@ class RegistrationForm extends React.Component {
 
   createNewUser = () => {
     if (this.checkValidInfo()) {
-      const URL = domain + "/users";
-      fetch(URL, {
-        method: "POST",
-        headers: { ...jsonHeaders },
-        body: JSON.stringify({
-          username: this.state.username,
-          displayName: this.state.displayName,
-          password: this.state.password
-        })
-      })
-        .then(response => handleJsonResponse(response))
-        .then(() => {
-          this.setState({ newUserCreated: true });
-        })
-        .catch(error => {
-          this.setState({
-            error:
-              "There was a problem getting you signed up. Please try again."
-          });
-        });
+      const { username, displayName, password } = this.state;
+      this.props.createUser(username, displayName, password);
+    }
+  };
 
-      if (this.state.newUserCreated) {
-        alert(
-          `You are now registered! Please click okay to log in with your new account information!`
-        );
-
-        // redirect user to login page
-        this.props.history.push("/");
-      }
+  componentDidUpdate = previousProps => {
+    if (this.props.error && previousProps.error !== this.props.error) {
+      this.setState({
+        error: this.props.error.message
+      });
     }
   };
 
@@ -210,4 +187,18 @@ class RegistrationForm extends React.Component {
   }
 }
 
-export default withRouter(RegistrationForm);
+const mapStateToProps = state => {
+  return {
+    error: state.auth.createUser.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createUser: (username, displayName, password) => {
+      dispatch(createNewUser(username, displayName, password));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

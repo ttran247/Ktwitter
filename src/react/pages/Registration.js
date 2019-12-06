@@ -2,6 +2,7 @@ import React from "react";
 import { Menu, PageHeader } from "../components";
 import { RegistrationForm } from "../components";
 import "./Registration.css";
+import { userIsNotAuthenticated } from "../HOCs";
 
 class Registration extends React.Component {
   render() {
@@ -19,4 +20,4 @@ class Registration extends React.Component {
   }
 }
 
-export default Registration;
+export default userIsNotAuthenticated(Registration);
