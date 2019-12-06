@@ -13,12 +13,17 @@ class MessageCard extends React.Component {
 
     this.state = {
       user: {},
+      likes: this.props.likes,
       postLiked: false
     };
   }
 
   addLike = () => {
+    let { likes } = this.state;
     this.props.addLike(this.props.id);
+    if (!this.props.addLikeError) {
+      likes.push({ placeholder: "newLike" });
+    }
     this.setState({ postLiked: true });
   };
 
@@ -103,7 +108,7 @@ class MessageCard extends React.Component {
                 Like
               </Button>
               <Label as="a" basic pointing="left">
-                {this.props.likes.length}
+                {this.state.likes.length}
               </Label>
             </Button>
             {isUsersMessage && (
@@ -145,7 +150,9 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     users: state.user.getAllUsers.users,
-    currentUser: state.auth.login.result.username
+    currentUser: state.auth.login.result.username,
+    addLikeError: state.likes.addLike.error,
+    deleteLikeError: state.likes.deleteLike.error
   };
 };
 
