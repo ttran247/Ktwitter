@@ -1,4 +1,9 @@
-import { domain, jsonHeaders, handleJsonResponse } from "./constants";
+import {
+  domain,
+  jsonHeaders,
+  handleJsonResponse,
+  handle401Error
+} from "./constants";
 import { LOGIN, LOGOUT } from "../actionTypes";
 
 const URL = domain + "/auth";
@@ -44,6 +49,7 @@ export const logout = () => (dispatch, getState) => {
       });
     })
     .catch(err => {
+      handle401Error(err);
       return Promise.reject(
         dispatch({ type: LOGOUT.FAIL, payload: err.message })
       );
