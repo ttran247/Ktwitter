@@ -1,14 +1,15 @@
 import React from "react";
 import { Card, Image, Popup, Dropdown, Modal } from "semantic-ui-react";
 import { Button } from "semantic-ui-react";
-import "./UserCard.css";
 import {
   changePicture,
   updateAbout,
-  getSingleUser
+  getSingleUser,
+  deleteUser
 } from "../../redux/actionCreators";
 import { connect } from "react-redux";
 import defaultPic from "../../img/brokenEgg.png";
+import "./UserCard.css";
 
 class UserCard extends React.Component {
   state = {
@@ -34,6 +35,8 @@ class UserCard extends React.Component {
       modalStatus = "picture";
     } else if (event.target.innerHTML === "Modify 'About Me'") {
       modalStatus = "about";
+    } else if (event.target.value === "Delete Account") {
+      modalStatus = "delete";
     }
 
     this.setState({ modalOpen: true, modalStatus });
@@ -48,6 +51,10 @@ class UserCard extends React.Component {
     this.props.updateAbout(this.state.inputValue);
   };
 
+  deleteUser = () => {
+    this.props.deleteUser(this.state.user.username);
+  };
+
   componentDidMount = () => {
     this.props.getSingleUser(this.props.username);
   };
@@ -59,7 +66,8 @@ class UserCard extends React.Component {
   }
 
   render() {
-    const { user } = this.state;
+    const { user, modalStatus } = this.state;
+    const authenticatedUsersProfile = this.props.currentUser === user.username;
     return (
       <div id="userCard-space">
         <Image
@@ -142,6 +150,13 @@ class UserCard extends React.Component {
                       text="Modify 'About Me'"
                       onClick={this.openModal}
                     />
+
+                    {authenticatedUsersProfile && (
+                      <Dropdown.Item
+                        text="Delete Account"
+                        onClick={this.openModal}
+                      />
+                    )}
                   </Dropdown.Menu>
                 </Dropdown>
               }
@@ -153,70 +168,91 @@ class UserCard extends React.Component {
                   alignItems: "center"
                 }}
               >
-                {this.state.modalStatus === "picture" ? (
-                  <textarea
-                    placeholder="Enter new picture URL"
-                    onChange={this.handleChange}
-                    value={this.state.inputValue}
-                    style={{
-                      width: "85%",
-                      border: "none"
-                    }}
-                    rows="6"
-                    autoFocus="true"
-                  />
+                {modalStatus === "picture" ? (
+                  <div className="modal-content">
+                    <textarea
+                      placeholder="Enter new picture URL"
+                      onChange={this.handleChange}
+                      value={this.state.inputValue}
+                      style={{
+                        width: "85%",
+                        border: "none"
+                      }}
+                      rows="1"
+                      autoFocus="true"
+                    />
+                    <Button
+                      style={{
+                        backgroundColor: "var(--kenzieBlue)",
+                        color: "var(--kenzieGreen)",
+                        textAlign: "center",
+                        width: "50%",
+                        marginTop: "5px"
+                      }}
+                      onClick={() => {
+                        this.newPicture();
+                        if (this.state.inputValue !== "") {
+                          this.setState({ inputValue: "" });
+                          this.closeModal();
+                        }
+                      }}
+                    >
+                      <Button.Content>Change Profile Photo</Button.Content>
+                    </Button>
+                  </div>
+                ) : modalStatus === "about" ? (
+                  <div className="modal-content">
+                    <textarea
+                      placeholder="Tell us about you"
+                      onChange={this.handleChange}
+                      value={this.state.inputValue}
+                      style={{
+                        width: "100%",
+                        border: "none"
+                      }}
+                      rows="6"
+                      autoFocus="true"
+                    />
+                    <Button
+                      style={{
+                        backgroundColor: "var(--kenzieBlue)",
+                        color: "var(--kenzieGreen)",
+                        textAlign: "center",
+                        width: "50%",
+                        marginTop: "5px"
+                      }}
+                      onClick={() => {
+                        this.newAbout();
+                        if (this.state.inputValue !== "") {
+                          this.setState({ inputValue: "" });
+                          this.closeModal();
+                        }
+                      }}
+                    >
+                      <Button.Content>Update Your Bio</Button.Content>
+                    </Button>
+                  </div>
                 ) : (
-                  <textarea
-                    placeholder="Tell us about you"
-                    onChange={this.handleChange}
-                    value={this.state.inputValue}
-                    style={{
-                      width: "85%",
-                      border: "none"
-                    }}
-                    rows="6"
-                    autoFocus="true"
-                  />
-                )}
-
-                {this.state.modalStatus === "picture" ? (
-                  <Button
-                    style={{
-                      backgroundColor: "var(--kenzieBlue)",
-                      color: "var(--kenzieGreen)",
-                      textAlign: "center",
-                      width: "150px",
-                      height: "50px"
-                    }}
-                    onClick={() => {
-                      this.newPicture();
-                      if (this.state.inputValue !== "") {
-                        this.setState({ inputValue: "" });
-                        this.closeModal();
-                      }
-                    }}
-                  >
-                    <Button.Content>Change Profile Photo</Button.Content>
-                  </Button>
-                ) : (
-                  <Button
-                    style={{
-                      backgroundColor: "var(--kenzieBlue)",
-                      color: "var(--kenzieGreen)",
-                      textAlign: "center",
-                      width: "150px",
-                      height: "50px"
-                    }}
-                    onClick={() => {
-                      this.newAbout();
-                      if (this.state.inputValue !== "") {
-                        this.setState({ inputValue: "" });
-                        this.closeModal();
-                      }
-                    }}
-                  >
-                    <Button.Content>Update Your Bio</Button.Content>
-                  </Button>
+                  <div className="modal-content">
+                    <p>Are you sure you want to delete your account?</p>
+                    <div id="confirmDelete-buttons">
+                      <Button
+                        style={{
+                          backgroundColor: "var(--kenzieBlue)",
+                          color: "var(--kenzieGreen)"
+                        }}
+                        onClick={this.deleteUser}
+                      >
+                        <Button.Content>Yes</Button.Content>
+                      </Button>
+                      <Button
+                        style={{ backgroundColor: "red", color: "white" }}
+                        onClick={this.closeModal}
+                      >
+                        <Button.Content>No</Button.Content>
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </Modal.Content>
             </Modal>
@@ -237,13 +273,17 @@ const mapDispatchToProps = dispatch => {
     },
     getSingleUser: username => {
       dispatch(getSingleUser(username));
+    },
+    deleteUser: username => {
+      dispatch(deleteUser(username));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.user.getSingleUser.user
+    user: state.user.getSingleUser.user,
+    currentUser: state.auth.login.result.username
   };
 };
 

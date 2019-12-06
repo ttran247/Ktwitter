@@ -1,17 +1,31 @@
-import { DELETE_USER } from "../../actionTypes";
-import { withAsyncReducer } from "../../HORs";
+import { DELETE_USER, LOGOUT } from "../../actionTypes";
 
 const initialState = {
-  user: null,
   loading: false,
   error: null
 };
 
-const deleteUser = (state = initialState, action) => {
+export const deleteUser = (state = initialState, action) => {
   switch (action.type) {
+    case DELETE_USER.START:
+      return {
+        loading: true,
+        error: null
+      };
+    case DELETE_USER.SUCCESS:
+      return {
+        loading: false
+      };
+    case DELETE_USER.FAIL:
+      return {
+        loading: false,
+        error: action.payload
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState
+      };
     default:
       return state;
   }
 };
-
-export default withAsyncReducer(DELETE_USER, deleteUser);
