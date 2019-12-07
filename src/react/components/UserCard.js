@@ -71,7 +71,9 @@ class UserCard extends React.Component {
     return (
       <div id="userCard-space">
         <Image
-          src={user.pictureLocation ? user.pictureLocation : defaultPic}
+          src={
+            user.pictureLocation ? `url(${user.pictureLocation})` : defaultPic
+          }
           size="medium"
           circular={true}
           style={{
@@ -141,6 +143,8 @@ class UserCard extends React.Component {
                   }}
                 >
                   <Dropdown.Menu>
+                    <Dropdown.Header>Settings</Dropdown.Header>
+                    <Dropdown.Divider />
                     <Dropdown.Item
                       text="Change Profile Picture"
                       onClick={this.openModal}

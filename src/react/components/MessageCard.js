@@ -86,7 +86,9 @@ class MessageCard extends React.Component {
       <div id="messageCard-card">
         <div id="messageCard-pic">
           <Image
-            src={user.pictureLocation ? user.pictureLocation : defaultPic}
+            src={
+              user.pictureLocation ? `url(${user.pictureLocation})` : defaultPic
+            }
             size="tiny"
             wrapped
             circular
