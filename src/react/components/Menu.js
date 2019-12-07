@@ -28,7 +28,11 @@ class Menu extends React.Component {
   render() {
     return (
       <div id="menu">
-        <div id="logo" />
+        <div id="logoContainer">
+          <div id="logoBorder">
+            <div id="logo" />
+          </div>
+        </div>
         <div id="menu-links">
           {this.props.isAuthenticated ? (
             <>

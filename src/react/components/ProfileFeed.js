@@ -17,6 +17,7 @@ class ProfileFeed extends React.Component {
 
   switchTabs = (event, { name }) => {
     this.setState({ active: name });
+    this.props.getMessages();
   };
 
   componentDidMount = () => {
