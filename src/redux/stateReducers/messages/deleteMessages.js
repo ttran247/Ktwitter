@@ -1,28 +1,24 @@
-import { POST_MESSAGE, LOGOUT } from "../../actionTypes";
+import { DELETE_MESSAGE, LOGOUT } from "../../actionTypes";
 
 const initialState = {
-  result: null,
   loading: false,
   error: null
 };
 
-export const postMessage = (state = initialState, action) => {
-  switch (action.payload) {
-    case POST_MESSAGE.START:
+export const deleteMessage = (state = initialState, action) => {
+  switch (action.type) {
+    case DELETE_MESSAGE.START:
       return {
-        ...state,
         loading: true,
         error: null
       };
-    case POST_MESSAGE.SUCCESS:
+    case DELETE_MESSAGE.SUCCESS:
       return {
         ...state,
-        loading: false,
-        result: action.payload
+        loading: false
       };
-    case POST_MESSAGE.FAIL:
+    case DELETE_MESSAGE.FAIL:
       return {
-        result: null,
         loading: false,
         error: action.payload
       };

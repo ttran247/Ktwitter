@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postMessage, getMessageArray } from "../../redux/actionCreators";
+import { postMessage, getMessages } from "../../redux/actionCreators";
 import { Button, Icon, Modal } from "semantic-ui-react";
 import "./NewMessageEntry.css";
 
@@ -32,6 +32,8 @@ class NewMessageEntry extends React.Component {
       this.state.inputValue.replace(/\s/g, "") !== ""
     ) {
       this.props.postMessage(this.state.inputValue);
+      this.setState({ inputValue: "" });
+      this.closeModal();
     } else {
       this.setState({
         inputValue: "",
@@ -56,6 +58,7 @@ class NewMessageEntry extends React.Component {
         <Modal
           trigger={
             <Button
+              icon
               animated
               style={{
                 backgroundColor: "var(--kenzieBlue)",
@@ -64,7 +67,10 @@ class NewMessageEntry extends React.Component {
               }}
               onClick={this.openModal}
             >
-              <Icon name="edit" size="big" />
+              <Button.Content visible>
+                <Icon name="edit" size="big" />
+              </Button.Content>
+              <Button.Content hidden>New Post</Button.Content>
             </Button>
           }
           style={{ width: "40%", height: "30%" }}
@@ -99,14 +105,7 @@ class NewMessageEntry extends React.Component {
                 color: "var(--kenzieGreen)",
                 textAlign: "center"
               }}
-              onClick={() => {
-                this.postNewMessage();
-                if (this.state.inputValue !== "") {
-                  this.setState({ inputValue: "" });
-                  this.closeModal();
-                  this.props.reloadMessages();
-                }
-              }}
+              onClick={this.postNewMessage}
             >
               <Button.Content visible>
                 <Icon name="comments" />
@@ -129,7 +128,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(postMessage(text));
     },
     reloadMessages: () => {
-      dispatch(getMessageArray());
+      dispatch(getMessages());
     }
   };
 };

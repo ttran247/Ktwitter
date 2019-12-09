@@ -31,10 +31,29 @@
 #logo {
   background-image: url("../../img/kenzie-logo.png");
   background-size: cover;
-  background-color: white;
   padding-bottom: 10px;
+  width: 90%;
+  height: 90%;
+}
+
+#logoBorder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 95%;
+  border: 2px dotted var(--kenzieBlue);
+  border-radius: 50%;
+  background-color: rgb(211, 211, 211);
+}
+
+#logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 130px;
   height: 130px;
+  background-color: white;
 }
 
 #iconSpacer {

@@ -1,28 +1,28 @@
-import { POST_MESSAGE, LOGOUT } from "../../actionTypes";
+import { GET_ALL_USERS, LOGOUT } from "../../actionTypes";
 
 const initialState = {
-  result: null,
+  users: null,
   loading: false,
   error: null
 };
 
-export const postMessage = (state = initialState, action) => {
-  switch (action.payload) {
-    case POST_MESSAGE.START:
+export const getAllUsers = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_ALL_USERS.START:
       return {
         ...state,
         loading: true,
         error: null
       };
-    case POST_MESSAGE.SUCCESS:
+    case GET_ALL_USERS.SUCCESS:
       return {
         ...state,
         loading: false,
-        result: action.payload
+        users: action.payload
       };
-    case POST_MESSAGE.FAIL:
+    case GET_ALL_USERS.FAIL:
       return {
-        result: null,
+        ...state,
         loading: false,
         error: action.payload
       };

@@ -1,4 +1,4 @@
-import { ADD_LIKE } from "../../actionTypes";
+import { ADD_LIKE, LOGOUT } from "../../actionTypes";
 
 const initialState = {
   loading: false,
@@ -14,12 +14,17 @@ export const addLike = (state = initialState, action) => {
       };
     case ADD_LIKE.SUCCESS:
       return {
+        ...state,
         loading: false
       };
     case ADD_LIKE.FAIL:
       return {
         loading: false,
         error: action.payload
+      };
+    case LOGOUT.SUCCESS:
+      return {
+        ...initialState
       };
     default:
       return state;
