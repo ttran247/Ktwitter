@@ -10,13 +10,15 @@ import {
 import { connect } from "react-redux";
 import defaultPic from "../../img/brokenEgg.png";
 import "./UserCard.css";
+import { domain } from "../../redux/actionCreators/constants"
 
 class UserCard extends React.Component {
   state = {
     inputValue: "",
     modalOpen: false,
     modalStatus: "",
-    user: {}
+    user: {},
+    error: ''
   };
 
   handleChange = event => {
@@ -43,12 +45,22 @@ class UserCard extends React.Component {
     console.log(event.target.innerHTML);
   };
 
-  newPicture = () => {
-    this.props.changePicture(this.state.inputValue);
+  newPicture = (event) => {
+    // const formData = new FormData(event.target)
+    event.preventDefault();
+    this.props.changePicture(event.target);
+    this.closeModal();
   };
 
+
+
   newAbout = () => {
+    if(this.state.inputValue.length <=255) {
     this.props.updateAbout(this.state.inputValue);
+    this.closeModal();
+    } else {
+      this.setState({ error: 'About me information must be less than 255 characters.'})
+    }
   };
 
   deleteUser = () => {
@@ -72,7 +84,7 @@ class UserCard extends React.Component {
       <div id="userCard-space">
         <Image
           src={
-            user.pictureLocation ? `url(${user.pictureLocation})` : defaultPic
+            user.pictureLocation ? `${domain}${user.pictureLocation}`: defaultPic
           }
           size="medium"
           circular={true}
@@ -174,34 +186,20 @@ class UserCard extends React.Component {
               >
                 {modalStatus === "picture" ? (
                   <div className="modal-content">
-                    <textarea
-                      placeholder="Enter new picture URL"
-                      onChange={this.handleChange}
-                      value={this.state.inputValue}
-                      style={{
-                        width: "85%",
-                        border: "none"
-                      }}
-                      rows="1"
-                      autoFocus="true"
-                    />
                     <Button
                       style={{
                         backgroundColor: "var(--kenzieBlue)",
                         color: "var(--kenzieGreen)",
                         textAlign: "center",
-                        width: "50%",
+                        width: "100%",
                         marginTop: "5px"
                       }}
-                      onClick={() => {
-                        this.newPicture();
-                        if (this.state.inputValue !== "") {
-                          this.setState({ inputValue: "" });
-                          this.closeModal();
-                        }
-                      }}
                     >
-                      <Button.Content>Change Profile Photo</Button.Content>
+                      <Button.Content> 
+                        <form onSubmit={this.newPicture}>
+                       <input type="file" name="picture"/>
+                        <input type="submit" value="Upload Picture"/>
+                        </form></Button.Content>
                     </Button>
                   </div>
                 ) : modalStatus === "about" ? (
@@ -225,16 +223,11 @@ class UserCard extends React.Component {
                         width: "50%",
                         marginTop: "5px"
                       }}
-                      onClick={() => {
-                        this.newAbout();
-                        if (this.state.inputValue !== "") {
-                          this.setState({ inputValue: "" });
-                          this.closeModal();
-                        }
-                      }}
+                      onClick={this.newAbout}
                     >
                       <Button.Content>Update Your Bio</Button.Content>
                     </Button>
+                    {this.state.error && <div>{this.state.error}</div>}
                   </div>
                 ) : (
                   <div className="modal-content">
@@ -262,18 +255,20 @@ class UserCard extends React.Component {
             </Modal>
           </Card.Content>
         </Card>
+
       </div>
     );
   }
 }
+
 
 const mapDispatchToProps = dispatch => {
   return {
     updateAbout: data => {
       dispatch(updateAbout(data));
     },
-    changePicture: picture => {
-      dispatch(changePicture(picture));
+    changePicture: formTag => {
+      dispatch(changePicture(formTag));
     },
     getSingleUser: username => {
       dispatch(getSingleUser(username));

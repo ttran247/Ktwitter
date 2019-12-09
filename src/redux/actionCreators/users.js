@@ -37,7 +37,7 @@ export const getSingleUser = username => {
   };
 };
 
-export const changePicture = picture => {
+export const changePicture = formTag => {
   const username = store.getState().auth.login.result.username;
   const token = store.getState().auth.login.result.token;
   return dispatch => {
@@ -49,29 +49,30 @@ export const changePicture = picture => {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
-        ...jsonHeaders
+        Accept: "application/json"
       },
-      body: JSON.stringify({
-        picture: picture
-      })
+      body: new FormData(formTag)
     })
       .then(response => handleJsonResponse(response))
-      .then(data =>
+      .then(result => {
         dispatch({
           type: CHANGE_PICTURE.SUCCESS,
-          payload: data.statusCode
-        })
+          payload: result
+        });
+        dispatch(getSingleUser(username));
+        }
       )
-      .catch(error =>
+      .catch(error =>{
+        handle401Error(error, dispatch);
         dispatch({
           type: CHANGE_PICTURE.FAIL,
           payload: error
-        })
+        })}
       );
   };
 };
 
-export const updateAbout = data => {
+export const updateAbout = bioData => {
   const username = store.getState().auth.login.result.username;
   const token = store.getState().auth.login.result.token;
   return dispatch => {
@@ -86,15 +87,16 @@ export const updateAbout = data => {
         ...jsonHeaders
       },
       body: JSON.stringify({
-        data: data
+        about: bioData
       })
     })
       .then(response => handleJsonResponse(response))
-      .then(data =>
-        dispatch({
+      .then(data =>{ dispatch({
           type: UPDATE_ABOUT.SUCCESS,
           payload: data.statusCode
         })
+        dispatch(getSingleUser(username));
+      }
       )
       .catch(error =>
         dispatch({
