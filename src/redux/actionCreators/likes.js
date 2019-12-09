@@ -1,6 +1,7 @@
 import { ADD_LIKE, DELETE_LIKE } from "../actionTypes";
 import { domain, handleJsonResponse, jsonHeaders } from "./constants";
 import { store } from "../index";
+import { getMessages } from "./messages";
 
 const URL = domain + "/likes/";
 
@@ -9,8 +10,8 @@ export const addLike = messageId => {
     dispatch({
       type: ADD_LIKE.START
     });
+
     const token = store.getState().auth.login.result.token;
-    console.log(messageId, token);
 
     return fetch(URL, {
       method: "POST",
@@ -21,11 +22,12 @@ export const addLike = messageId => {
       body: JSON.stringify({ messageId: messageId })
     })
       .then(response => handleJsonResponse(response))
-      .then(data =>
+      .then(data => {
         dispatch({
           type: ADD_LIKE.SUCCESS
-        })
-      )
+        });
+        dispatch(getMessages());
+      })
       .catch(error => {
         console.log(error.headers);
         dispatch({
@@ -49,8 +51,7 @@ export const deleteLike = likeId => {
       headers: {
         Authorization: `Bearer ${token}`,
         ...jsonHeaders
-      },
-      body: JSON.stringify({ likedId: likeId })
+      }
     })
       .then(response => handleJsonResponse(response))
       .then(data =>
