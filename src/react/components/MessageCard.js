@@ -1,11 +1,15 @@
 import React from "react";
-import { addLike, deleteLike } from "../../redux/actionCreators";
+import {
+  addLike,
+  deleteLike,
+  deleteMessage,
+  getMessages
+} from "../../redux/actionCreators";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label, Popup } from "semantic-ui-react";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
-import { store, deleteMessage, getMessages } from "../../redux";
 
 class MessageCard extends React.Component {
   constructor(props) {
@@ -13,24 +17,28 @@ class MessageCard extends React.Component {
 
     this.state = {
       user: {},
-      likes: this.props.likes,
+      likesCount: this.props.likes.length,
       postLiked: false,
       showPopup: false
     };
   }
 
   addLike = () => {
-    let { likes } = this.state;
     this.props.addLike(this.props.id);
     if (!this.props.addLikeError) {
-      likes.push({ placeholder: "newLike" });
+      this.setState({ postLiked: true, likesCount: this.state.likesCount + 1 });
     }
-    this.setState({ postLiked: true });
   };
 
   deleteLike = () => {
-    this.props.deleteLike(this.state.likedId);
-    this.setState({ postLiked: false });
+    const userLike = this.getLikeId();
+    this.props.deleteLike(userLike);
+    if (!this.props.deleteLikeError) {
+      this.setState({
+        postLiked: false,
+        likesCount: this.state.likesCount - 1
+      });
+    }
   };
 
   deleteMessage = () => {
@@ -47,16 +55,27 @@ class MessageCard extends React.Component {
   };
 
   setLikeStatus = () => {
-    const user = store.getState().auth.login.result.username;
-    const likesArray = this.props.likes;
-    for (let i = 0; i < likesArray.length; i++) {
-      if (user === likesArray[i].username) {
-        this.setState({ postLiked: true, likedId: likesArray[i].id });
-        break;
-      } else {
-        continue;
+    let { currentUser, likes } = this.props;
+    likes.forEach(like => {
+      if (currentUser === like.username) {
+        this.setState({ postLiked: true });
       }
-    }
+    });
+  };
+
+  getLikeId = () => {
+    const { allMessages, currentUser } = this.props;
+    const currentMessage = allMessages.find(message => {
+      if (message.id === this.props.id) {
+        return message;
+      }
+    });
+    const userLike = currentMessage.likes.find(like => {
+      if (like.username === currentUser) {
+        return like;
+      }
+    });
+    return userLike.id;
   };
 
   handlePopupClick = () => {
@@ -127,7 +146,7 @@ class MessageCard extends React.Component {
                 Like
               </Button>
               <Label as="a" basic pointing="left">
-                {this.state.likes.length}
+                {this.state.likesCount}
               </Label>
             </Button>
             {isUsersMessage && (
@@ -194,6 +213,7 @@ const mapStateToProps = state => {
   return {
     users: state.user.getAllUsers.users,
     currentUser: state.auth.login.result.username,
+    allMessages: state.messages.allMessages.messages,
     addLikeError: state.likes.addLike.error,
     deleteLikeError: state.likes.deleteLike.error
   };
