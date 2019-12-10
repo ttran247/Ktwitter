@@ -93,7 +93,7 @@ class ProfileFeed extends React.Component {
                 );
               })
             : active === "Messages"
-            ? `You haven't made any posts yet...`
+            ? `No posts yet...`
             : active === "Likes" && likedPosts.length > 0
             ? likedPosts.map(message => {
                 return (
@@ -120,7 +120,7 @@ class ProfileFeed extends React.Component {
                   />
                 );
               })
-            : "You haven't liked any posts yet..."}
+            : "No 'liked' posts..."}
         </div>
       </React.Fragment>
     );
