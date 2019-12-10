@@ -21,3 +21,7 @@
   display: flex;
   justify-content: space-around;
 }
+
+#aboutMe-chars {
+  color: rgb(100, 100, 100);
+}

@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 import defaultPic from "../../img/brokenEgg.png";
 import "./UserCard.css";
-import { domain } from "../../redux/actionCreators/constants"
+import { domain } from "../../redux/actionCreators/constants";
 
 class UserCard extends React.Component {
   state = {
@@ -18,13 +18,16 @@ class UserCard extends React.Component {
     modalOpen: false,
     modalStatus: "",
     user: {},
-    error: ''
+    error: ""
   };
 
   handleChange = event => {
-    this.setState({
-      inputValue: event.target.value
-    });
+    if (event.target.value.length <= 255) {
+      this.setState({
+        inputValue: event.target.value,
+        error: null
+      });
+    }
   };
 
   closeModal = () => {
@@ -45,22 +48,17 @@ class UserCard extends React.Component {
     console.log(event.target.innerHTML);
   };
 
-  newPicture = (event) => {
+  newPicture = event => {
     // const formData = new FormData(event.target)
     event.preventDefault();
     this.props.changePicture(event.target);
     this.closeModal();
   };
 
-
-
   newAbout = () => {
-    if(this.state.inputValue.length <=255) {
     this.props.updateAbout(this.state.inputValue);
     this.closeModal();
-    } else {
-      this.setState({ error: 'About me information must be less than 255 characters.'})
-    }
+    this.setState({ inputValue: "" });
   };
 
   deleteUser = () => {
@@ -78,13 +76,17 @@ class UserCard extends React.Component {
   }
 
   render() {
+    let aboutMeChars = this.state.inputValue.length;
+
     const { user, modalStatus } = this.state;
     const authenticatedUsersProfile = this.props.currentUser === user.username;
     return (
       <div id="userCard-space">
         <Image
           src={
-            user.pictureLocation ? `${domain}${user.pictureLocation}`: defaultPic
+            user.pictureLocation
+              ? `${domain}${user.pictureLocation}`
+              : defaultPic
           }
           size="medium"
           circular={true}
@@ -195,11 +197,12 @@ class UserCard extends React.Component {
                         marginTop: "5px"
                       }}
                     >
-                      <Button.Content> 
+                      <Button.Content>
                         <form onSubmit={this.newPicture}>
-                       <input type="file" name="picture"/>
-                        <input type="submit" value="Upload Picture"/>
-                        </form></Button.Content>
+                          <input type="file" name="picture" />
+                          <input type="submit" value="Upload Picture" />
+                        </form>
+                      </Button.Content>
                     </Button>
                   </div>
                 ) : modalStatus === "about" ? (
@@ -215,6 +218,7 @@ class UserCard extends React.Component {
                       rows="6"
                       autoFocus="true"
                     />
+                    <div id="aboutMe-chars">{aboutMeChars}/255 characters</div>
                     <Button
                       style={{
                         backgroundColor: "var(--kenzieBlue)",
@@ -255,12 +259,10 @@ class UserCard extends React.Component {
             </Modal>
           </Card.Content>
         </Card>
-
       </div>
     );
   }
 }
-
 
 const mapDispatchToProps = dispatch => {
   return {
