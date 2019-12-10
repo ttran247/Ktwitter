@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { Image, Button, Icon, Label, Popup } from "semantic-ui-react";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
+import { domain } from "../../redux/actionCreators/constants";
 
 class MessageCard extends React.Component {
   constructor(props) {
@@ -111,7 +112,9 @@ class MessageCard extends React.Component {
         <div id="messageCard-pic">
           <Image
             src={
-              user.pictureLocation ? `url(${user.pictureLocation})` : defaultPic
+              user.pictureLocation
+                ? `${domain}${user.pictureLocation}`
+                : defaultPic
             }
             size="tiny"
             wrapped
