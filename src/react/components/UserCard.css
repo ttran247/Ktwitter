@@ -17,7 +17,30 @@
   justify-content: space-evenly;
 }
 
+.modal-content form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  border: 2px solid var(--kenzieBlue);
+  border-radius: 5px;
+  padding: 20px;
+}
+
 #confirmDelete-buttons {
   display: flex;
   justify-content: space-around;
+}
+
+#aboutMe-chars {
+  color: rgb(100, 100, 100);
+}
+
+#aboutMe-submit {
+  background-color: var(--kenzieBlue);
+  color: var(--kenzieGreen);
+  border: 2px solid var(--kenzieGreen);
+  border-radius: 5px;
+  font-family: var(--defaultFont);
+  font-size: 18px;
 }

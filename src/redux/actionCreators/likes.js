@@ -1,5 +1,10 @@
 import { ADD_LIKE, DELETE_LIKE } from "../actionTypes";
-import { domain, handleJsonResponse, jsonHeaders } from "./constants";
+import {
+  domain,
+  handleJsonResponse,
+  jsonHeaders,
+  handle401Error
+} from "./constants";
 import { store } from "../index";
 import { getMessages } from "./messages";
 
@@ -29,7 +34,7 @@ export const addLike = messageId => {
         dispatch(getMessages());
       })
       .catch(error => {
-        console.log(error.headers);
+        handle401Error(error, dispatch);
         dispatch({
           type: ADD_LIKE.FAIL,
           payload: error
@@ -60,6 +65,7 @@ export const deleteLike = likeId => {
         })
       )
       .catch(error => {
+        handle401Error(error, dispatch);
         dispatch({
           type: DELETE_LIKE.FAIL,
           payload: error

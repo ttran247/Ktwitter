@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from ".";
 import "./Menu.css";
-import { withAsyncAction } from "../HOCs";
+import { connect } from "react-redux";
 import { Icon } from "semantic-ui-react";
-import { store } from "../../redux";
+import { store, logout, getSingleUser } from "../../redux";
 
 class Menu extends React.Component {
   constructor(props) {
@@ -16,6 +16,10 @@ class Menu extends React.Component {
   handleLogout = event => {
     event.preventDefault();
     this.props.logout();
+  };
+
+  getAuthUserInfo = () => {
+    this.props.getAuthenticatedUser(this.state.authUser);
   };
 
   componentDidMount = () => {
@@ -46,7 +50,10 @@ class Menu extends React.Component {
                 </div>
                 Home
               </Link>
-              <Link to={`/profile/${this.state.authUser}`}>
+              <Link
+                to={`/profile/${this.state.authUser}`}
+                onClick={this.getAuthUserInfo}
+              >
                 <div id="iconSpacer">
                   <Icon
                     name="user"
@@ -97,4 +104,15 @@ class Menu extends React.Component {
   }
 }
 
-export default withAsyncAction("auth", "logout")(Menu);
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => {
+      dispatch(logout());
+    },
+    getAuthenticatedUser: username => {
+      dispatch(getSingleUser(username));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Menu);

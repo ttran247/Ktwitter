@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { Image, Button, Icon, Label, Popup } from "semantic-ui-react";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
+import { domain } from "../../redux/actionCreators/constants";
 
 class MessageCard extends React.Component {
   constructor(props) {
@@ -25,19 +26,24 @@ class MessageCard extends React.Component {
 
   addLike = () => {
     this.props.addLike(this.props.id);
-    if (!this.props.addLikeError) {
-      this.setState({ postLiked: true, likesCount: this.state.likesCount + 1 });
-    }
+    this.setState({ postLiked: true, likesCount: this.state.likesCount + 1 });
   };
 
   deleteLike = () => {
     const userLike = this.getLikeId();
     this.props.deleteLike(userLike);
-    if (!this.props.deleteLikeError) {
-      this.setState({
-        postLiked: false,
-        likesCount: this.state.likesCount - 1
-      });
+    this.setState({
+      postLiked: false,
+      likesCount: this.state.likesCount - 1
+    });
+  };
+
+  toggleLike = () => {
+    const { postLiked } = this.state;
+    if (postLiked) {
+      this.deleteLike();
+    } else {
+      this.addLike();
     }
   };
 
@@ -106,7 +112,9 @@ class MessageCard extends React.Component {
         <div id="messageCard-pic">
           <Image
             src={
-              user.pictureLocation ? `url(${user.pictureLocation})` : defaultPic
+              user.pictureLocation
+                ? `${domain}${user.pictureLocation}`
+                : defaultPic
             }
             size="tiny"
             wrapped
@@ -122,9 +130,7 @@ class MessageCard extends React.Component {
           <div id="messageCard-buttons">
             <Button as="div" labelPosition="right">
               <Button
-                onClick={
-                  this.state.postLiked === true ? this.deleteLike : this.addLike
-                }
+                onClick={this.toggleLike}
                 icon
                 style={
                   this.state.postLiked === false
@@ -213,9 +219,7 @@ const mapStateToProps = state => {
   return {
     users: state.user.getAllUsers.users,
     currentUser: state.auth.login.result.username,
-    allMessages: state.messages.allMessages.messages,
-    addLikeError: state.likes.addLike.error,
-    deleteLikeError: state.likes.deleteLike.error
+    allMessages: state.messages.allMessages.messages
   };
 };
 
