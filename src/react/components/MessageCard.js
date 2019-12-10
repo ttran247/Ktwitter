@@ -114,9 +114,9 @@ class MessageCard extends React.Component {
                 ? `${domain}${user.pictureLocation}`
                 : defaultPic
             }
-            size="tiny"
             wrapped
-            circular
+            circular={true}
+            style={{ width: "75px", height: "75px" }}
           />
         </div>
         <div id="messageCard-space">

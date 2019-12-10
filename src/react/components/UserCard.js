@@ -87,9 +87,10 @@ class UserCard extends React.Component {
               ? `${domain}${user.pictureLocation}`
               : defaultPic
           }
-          size="medium"
           circular={true}
           style={{
+            width: "300px",
+            height: "300px",
             border: "4px solid var(--kenzieBlue)"
           }}
         />
