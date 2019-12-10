@@ -40,6 +40,7 @@ export const getSingleUser = username => {
 export const changePicture = formTag => {
   const username = store.getState().auth.login.result.username;
   const token = store.getState().auth.login.result.token;
+
   return dispatch => {
     dispatch({
       type: CHANGE_PICTURE.START
@@ -60,21 +61,21 @@ export const changePicture = formTag => {
           payload: result
         });
         dispatch(getSingleUser(username));
-        }
-      )
-      .catch(error =>{
+      })
+      .catch(error => {
         handle401Error(error, dispatch);
         dispatch({
           type: CHANGE_PICTURE.FAIL,
           payload: error
-        })}
-      );
+        });
+      });
   };
 };
 
 export const updateAbout = bioData => {
   const username = store.getState().auth.login.result.username;
   const token = store.getState().auth.login.result.token;
+
   return dispatch => {
     dispatch({
       type: UPDATE_ABOUT.START
@@ -91,19 +92,20 @@ export const updateAbout = bioData => {
       })
     })
       .then(response => handleJsonResponse(response))
-      .then(data =>{ dispatch({
+      .then(data => {
+        dispatch({
           type: UPDATE_ABOUT.SUCCESS,
           payload: data.statusCode
-        })
+        });
         dispatch(getSingleUser(username));
-      }
-      )
-      .catch(error =>
+      })
+      .catch(error => {
+        handle401Error(error, dispatch);
         dispatch({
           type: UPDATE_ABOUT.FAIL,
           payload: error
-        })
-      );
+        });
+      });
   };
 };
 
