@@ -45,7 +45,6 @@ class UserCard extends React.Component {
     }
 
     this.setState({ modalOpen: true, modalStatus });
-    console.log(event.target.innerHTML);
   };
 
   newPicture = event => {
@@ -88,9 +87,10 @@ class UserCard extends React.Component {
               ? `${domain}${user.pictureLocation}`
               : defaultPic
           }
-          size="medium"
           circular={true}
           style={{
+            width: "300px",
+            height: "300px",
             border: "4px solid var(--kenzieBlue)"
           }}
         />
@@ -206,7 +206,7 @@ class UserCard extends React.Component {
                           border: "none"
                         }}
                         rows="6"
-                        autoFocus="true"
+                        autoFocus={true}
                       />
                       <div id="aboutMe-chars">
                         {aboutMeChars}/255 characters
