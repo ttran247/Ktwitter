@@ -40,7 +40,7 @@ class UserCard extends React.Component {
       modalStatus = "picture";
     } else if (event.target.innerHTML === "Modify 'About Me'") {
       modalStatus = "about";
-    } else if (event.target.value === "Delete Account") {
+    } else if (event.target.innerHTML === "Delete Account") {
       modalStatus = "delete";
     }
 
@@ -139,116 +139,117 @@ class UserCard extends React.Component {
                 )}
               </strong>
             </Popup>
-            <Modal
-              style={{
-                width: "600px"
-              }}
-              open={this.state.modalOpen}
-              closeIcon
-              onClose={this.closeModal}
-              trigger={
-                <Dropdown
-                  button
-                  className="icon"
-                  icon="settings"
-                  style={{
-                    backgroundColor: "var(--kenzieBlue)",
-                    color: "var(--kenzieGreen)"
-                  }}
-                >
-                  <Dropdown.Menu>
-                    <Dropdown.Header>Settings</Dropdown.Header>
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      text="Change Profile Picture"
-                      onClick={this.openModal}
-                    />
+            {authenticatedUsersProfile && (
+              <Modal
+                style={{
+                  width: "600px"
+                }}
+                open={this.state.modalOpen}
+                closeIcon
+                onClose={this.closeModal}
+                trigger={
+                  <Dropdown
+                    button
+                    className="icon"
+                    icon="settings"
+                    style={{
+                      backgroundColor: "var(--kenzieBlue)",
+                      color: "var(--kenzieGreen)"
+                    }}
+                  >
+                    <Dropdown.Menu>
+                      <Dropdown.Header>Settings</Dropdown.Header>
+                      <Dropdown.Divider />
+                      <Dropdown.Item
+                        text="Change Profile Picture"
+                        onClick={this.openModal}
+                      />
 
-                    <Dropdown.Item
-                      text="Modify 'About Me'"
-                      onClick={this.openModal}
-                    />
-
-                    {authenticatedUsersProfile && (
+                      <Dropdown.Item
+                        text="Modify 'About Me'"
+                        onClick={this.openModal}
+                      />
                       <Dropdown.Item
                         text="Delete Account"
                         onClick={this.openModal}
                       />
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
-              }
-            >
-              <Modal.Content
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center"
-                }}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                }
               >
-                {modalStatus === "picture" ? (
-                  <div className="modal-content">
-                    <form onSubmit={this.newPicture}>
-                      <input type="file" name="picture" />
-                      <input
-                        id="aboutMe-submit"
-                        type="submit"
-                        value="Upload Picture"
+                <Modal.Content
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center"
+                  }}
+                >
+                  {modalStatus === "picture" ? (
+                    <div className="modal-content">
+                      <form onSubmit={this.newPicture}>
+                        <input type="file" name="picture" />
+                        <input
+                          id="aboutMe-submit"
+                          type="submit"
+                          value="Upload Picture"
+                        />
+                      </form>
+                    </div>
+                  ) : modalStatus === "about" ? (
+                    <div className="modal-content">
+                      <textarea
+                        placeholder="Tell us about you"
+                        onChange={this.handleChange}
+                        value={this.state.inputValue}
+                        style={{
+                          width: "100%",
+                          border: "none"
+                        }}
+                        rows="6"
+                        autoFocus="true"
                       />
-                    </form>
-                  </div>
-                ) : modalStatus === "about" ? (
-                  <div className="modal-content">
-                    <textarea
-                      placeholder="Tell us about you"
-                      onChange={this.handleChange}
-                      value={this.state.inputValue}
-                      style={{
-                        width: "100%",
-                        border: "none"
-                      }}
-                      rows="6"
-                      autoFocus="true"
-                    />
-                    <div id="aboutMe-chars">{aboutMeChars}/255 characters</div>
-                    <Button
-                      style={{
-                        backgroundColor: "var(--kenzieBlue)",
-                        color: "var(--kenzieGreen)",
-                        textAlign: "center",
-                        width: "50%",
-                        marginTop: "5px"
-                      }}
-                      onClick={this.newAbout}
-                    >
-                      <Button.Content>Update Your Bio</Button.Content>
-                    </Button>
-                    {this.state.error && <div>{this.state.error}</div>}
-                  </div>
-                ) : (
-                  <div className="modal-content">
-                    <p>Are you sure you want to delete your account?</p>
-                    <div id="confirmDelete-buttons">
+                      <div id="aboutMe-chars">
+                        {aboutMeChars}/255 characters
+                      </div>
                       <Button
                         style={{
                           backgroundColor: "var(--kenzieBlue)",
-                          color: "var(--kenzieGreen)"
+                          color: "var(--kenzieGreen)",
+                          textAlign: "center",
+                          width: "50%",
+                          marginTop: "5px"
                         }}
-                        onClick={this.deleteUser}
+                        onClick={this.newAbout}
                       >
-                        <Button.Content>Yes</Button.Content>
+                        <Button.Content>Update Your Bio</Button.Content>
                       </Button>
-                      <Button
-                        style={{ backgroundColor: "red", color: "white" }}
-                        onClick={this.closeModal}
-                      >
-                        <Button.Content>No</Button.Content>
-                      </Button>
+                      {this.state.error && <div>{this.state.error}</div>}
                     </div>
-                  </div>
-                )}
-              </Modal.Content>
-            </Modal>
+                  ) : (
+                    <div className="modal-content">
+                      <p>Are you sure you want to delete your account?</p>
+                      <div id="confirmDelete-buttons">
+                        <Button
+                          style={{
+                            backgroundColor: "var(--kenzieBlue)",
+                            color: "var(--kenzieGreen)"
+                          }}
+                          onClick={this.deleteUser}
+                        >
+                          <Button.Content>Yes</Button.Content>
+                        </Button>
+                        <Button
+                          style={{ backgroundColor: "red", color: "white" }}
+                          onClick={this.closeModal}
+                        >
+                          <Button.Content>No</Button.Content>
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </Modal.Content>
+              </Modal>
+            )}
           </Card.Content>
         </Card>
       </div>
