@@ -1,9 +1,4 @@
-import {
-  GET_MESSAGES,
-  POST_MESSAGE,
-  DELETE_MESSAGE,
-  GET_SINGLE_MESSAGE
-} from "../actionTypes";
+import { GET_MESSAGES, POST_MESSAGE, DELETE_MESSAGE } from "../actionTypes";
 import {
   domain,
   handleJsonResponse,
@@ -63,7 +58,7 @@ export const postMessage = text => {
         return dispatch(getMessages());
       })
       .catch(error => {
-        handle401Error(error);
+        handle401Error(error, dispatch);
         return dispatch({
           type: POST_MESSAGE.FAIL,
           payload: error
@@ -95,6 +90,7 @@ export const deleteMessage = messageId => {
         return dispatch(getMessages());
       })
       .catch(error => {
+        handle401Error(error, dispatch);
         dispatch({
           type: DELETE_MESSAGE.FAIL,
           payload: error
