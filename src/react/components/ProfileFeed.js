@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
-import { getMessages } from "../../redux";
+import { getMessages, getAllUsers } from "../../redux";
 import { connect } from "react-redux";
 import "./ProfileFeed.css";
 import MessageCard from "./MessageCard";
@@ -18,10 +18,12 @@ class ProfileFeed extends React.Component {
   switchTabs = (event, { name }) => {
     this.setState({ active: name });
     this.props.getMessages();
+    this.props.getAllUsers();
   };
 
   componentDidMount = () => {
     this.props.getMessages();
+    this.props.getAllUsers();
   };
 
   componentDidUpdate = previousProps => {
@@ -70,11 +72,7 @@ class ProfileFeed extends React.Component {
             ? userMessages.map(message => {
                 return (
                   <MessageCard
-                    username={
-                      message.displayName
-                        ? message.displayName
-                        : message.username
-                    }
+                    username={message.username}
                     likes={message.likes}
                     text={message.text}
                     date={`${new Date(message.createdAt).toLocaleTimeString(
@@ -98,11 +96,7 @@ class ProfileFeed extends React.Component {
             ? likedPosts.map(message => {
                 return (
                   <MessageCard
-                    username={
-                      message.displayName
-                        ? message.displayName
-                        : message.username
-                    }
+                    username={message.username}
                     likes={message.likes}
                     text={message.text}
                     date={`${new Date(message.createdAt).toLocaleTimeString(
@@ -131,6 +125,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getMessages: () => {
       dispatch(getMessages());
+    },
+    getAllUsers: () => {
+      dispatch(getAllUsers());
     }
   };
 };

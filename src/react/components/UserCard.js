@@ -45,7 +45,6 @@ class UserCard extends React.Component {
     }
 
     this.setState({ modalOpen: true, modalStatus });
-    console.log(event.target.innerHTML);
   };
 
   newPicture = event => {
@@ -206,7 +205,7 @@ class UserCard extends React.Component {
                           border: "none"
                         }}
                         rows="6"
-                        autoFocus="true"
+                        autoFocus={true}
                       />
                       <div id="aboutMe-chars">
                         {aboutMeChars}/255 characters

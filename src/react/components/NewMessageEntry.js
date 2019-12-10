@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { postMessage, getMessages } from "../../redux/actionCreators";
+import { postMessage } from "../../redux/actionCreators";
 import { Button, Icon, Modal } from "semantic-ui-react";
 import "./NewMessageEntry.css";
 

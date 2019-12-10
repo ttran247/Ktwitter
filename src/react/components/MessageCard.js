@@ -8,9 +8,9 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Image, Button, Icon, Label, Popup } from "semantic-ui-react";
+import { domain } from "../../redux/actionCreators/constants";
 import "./messageCard.css";
 import defaultPic from "../../img/brokenEgg.png";
-import { domain } from "../../redux/actionCreators/constants";
 
 class MessageCard extends React.Component {
   constructor(props) {
@@ -55,7 +55,6 @@ class MessageCard extends React.Component {
     this.props.users.forEach(user => {
       if (user.username === this.props.username) {
         this.setState({ user: user });
-        return;
       }
     });
   };
@@ -71,16 +70,12 @@ class MessageCard extends React.Component {
 
   getLikeId = () => {
     const { allMessages, currentUser } = this.props;
-    const currentMessage = allMessages.find(message => {
-      if (message.id === this.props.id) {
-        return message;
-      }
-    });
-    const userLike = currentMessage.likes.find(like => {
-      if (like.username === currentUser) {
-        return like;
-      }
-    });
+    const currentMessage = allMessages.find(
+      message => message.id === this.props.id
+    );
+    const userLike = currentMessage.likes.find(
+      like => like.username === currentUser
+    );
     return userLike.id;
   };
 
@@ -97,8 +92,11 @@ class MessageCard extends React.Component {
     this.setLikeStatus();
   };
 
-  componentDidUpdate = () => {
-    if (this.props.users && this.state.user === {}) {
+  componentDidUpdate = previousProps => {
+    if (
+      this.props.users &&
+      (previousProps.users !== this.props.users || this.state.user === {})
+    ) {
       this.getUser();
     }
   };
@@ -123,7 +121,7 @@ class MessageCard extends React.Component {
         </div>
         <div id="messageCard-space">
           <Link to={`../profile/${username}`}>
-            <h3>{this.props.displayName}</h3>
+            <h3>{user.displayName ? user.displayName : username}</h3>
           </Link>
           {this.props.text}
           <p>{this.props.date}</p>

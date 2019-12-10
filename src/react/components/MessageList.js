@@ -36,9 +36,6 @@ class MessageList extends React.Component {
           const date = new Date(message.createdAt);
           return (
             <MessageCard
-              displayName={
-                message.displayName ? message.displayName : message.username
-              }
               username={message.username}
               likes={message.likes}
               text={message.text}

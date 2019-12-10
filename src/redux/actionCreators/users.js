@@ -10,7 +10,7 @@ import {
 import { domain, handleJsonResponse, handle401Error } from "./constants";
 import { store } from "../index";
 import { jsonHeaders } from "../actionCreators/constants/index";
-import { login, logout } from "./auth";
+import { login } from "./auth";
 
 const URL = domain + "/users";
 
