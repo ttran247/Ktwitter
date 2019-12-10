@@ -188,22 +188,14 @@ class UserCard extends React.Component {
               >
                 {modalStatus === "picture" ? (
                   <div className="modal-content">
-                    <Button
-                      style={{
-                        backgroundColor: "var(--kenzieBlue)",
-                        color: "var(--kenzieGreen)",
-                        textAlign: "center",
-                        width: "100%",
-                        marginTop: "5px"
-                      }}
-                    >
-                      <Button.Content>
-                        <form onSubmit={this.newPicture}>
-                          <input type="file" name="picture" />
-                          <input type="submit" value="Upload Picture" />
-                        </form>
-                      </Button.Content>
-                    </Button>
+                    <form onSubmit={this.newPicture}>
+                      <input type="file" name="picture" />
+                      <input
+                        id="aboutMe-submit"
+                        type="submit"
+                        value="Upload Picture"
+                      />
+                    </form>
                   </div>
                 ) : modalStatus === "about" ? (
                   <div className="modal-content">
