@@ -126,9 +126,6 @@ const mapDispatchToProps = dispatch => {
   return {
     postMessage: text => {
       dispatch(postMessage(text));
-    },
-    reloadMessages: () => {
-      dispatch(getMessages());
     }
   };
 };
