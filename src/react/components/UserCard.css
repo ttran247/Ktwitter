@@ -44,3 +44,12 @@
   font-family: var(--defaultFont);
   font-size: 18px;
 }
+
+#userCard-profilePic {
+  height: 300px;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--kenzieBlue);
+  border-radius: 50%;
+}

@@ -108,15 +108,13 @@ class MessageCard extends React.Component {
     return (
       <div id="messageCard-card">
         <div id="messageCard-pic">
-          <Image
-            src={
-              user.pictureLocation
-                ? `${domain}${user.pictureLocation}`
+          <div
+            id="messageCard-profilePic"
+            style={{
+              backgroundImage: user.pictureLocation
+                ? `url(${domain}${user.pictureLocation})`
                 : defaultPic
-            }
-            wrapped
-            circular={true}
-            style={{ width: "75px", height: "75px" }}
+            }}
           />
         </div>
         <div id="messageCard-space">

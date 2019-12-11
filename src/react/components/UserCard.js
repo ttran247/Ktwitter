@@ -48,7 +48,6 @@ class UserCard extends React.Component {
   };
 
   newPicture = event => {
-    // const formData = new FormData(event.target)
     event.preventDefault();
     this.props.changePicture(event.target);
     this.closeModal();
@@ -81,17 +80,12 @@ class UserCard extends React.Component {
     const authenticatedUsersProfile = this.props.currentUser === user.username;
     return (
       <div id="userCard-space">
-        <Image
-          src={
-            user.pictureLocation
-              ? `${domain}${user.pictureLocation}`
-              : defaultPic
-          }
-          circular={true}
+        <div
+          id="userCard-profilePic"
           style={{
-            width: "300px",
-            height: "300px",
-            border: "4px solid var(--kenzieBlue)"
+            backgroundImage: user.pictureLocation
+              ? `url(${domain}${user.pictureLocation})`
+              : defaultPic
           }}
         />
         <Card id="userCard-card">
