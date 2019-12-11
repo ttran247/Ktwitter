@@ -113,7 +113,7 @@ class MessageCard extends React.Component {
             style={{
               backgroundImage: user.pictureLocation
                 ? `url(${domain}${user.pictureLocation})`
-                : defaultPic
+                : `url(${defaultPic})`
             }}
           />
         </div>

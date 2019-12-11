@@ -94,7 +94,7 @@ class UserCard extends React.Component {
           style={{
             backgroundImage: user.pictureLocation
               ? `url(${domain}${user.pictureLocation})`
-              : defaultPic
+              : `url(${defaultPic})`
           }}
         />
         <Card id="userCard-card">
