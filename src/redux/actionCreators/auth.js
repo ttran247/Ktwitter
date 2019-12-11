@@ -49,7 +49,7 @@ export const logout = () => (dispatch, getState) => {
       });
     })
     .catch(err => {
-      handle401Error(err);
+      handle401Error(err, dispatch);
       return Promise.reject(
         dispatch({ type: LOGOUT.FAIL, payload: err.message })
       );
