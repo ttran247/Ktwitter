@@ -1,5 +1,6 @@
-export const domain = "https://kwitter-api.herokuapp.com";
-//export const domain = "http://localhost:3000";
+import { LOGOUT } from "../../actionTypes";
+
+export const domain = "https://kwitter-dream-team.herokuapp.com";
 
 export const jsonHeaders = {
   "Content-Type": "application/json",
@@ -13,4 +14,13 @@ export const handleJsonResponse = res => {
   return res.json().then(result => {
     throw result;
   });
+};
+
+export const handle401Error = (error, dispatch) => {
+  if (error.statusCode === 401) {
+    return dispatch({
+      type: LOGOUT.SUCCESS,
+      payload: { statusCode: 200 }
+    });
+  }
 };

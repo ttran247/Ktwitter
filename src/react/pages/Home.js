@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, NewMessageEntry } from "../components";
+import { Menu, NewMessageEntry, MessageList, PageHeader } from "../components";
 import { userIsAuthenticated } from "../HOCs";
 import "./Home.css";
 
@@ -7,11 +7,13 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <h2>Home</h2>
-        <div id="container">
-          <Menu isAuthenticated={this.props.isAuthenticated} />
+        <Menu isAuthenticated={this.props.isAuthenticated} />
+        <div id="homeContainer">
+          <PageHeader title="Home" tagLine="Welcome back!" />
           <NewMessageEntry />
-        </div>
+          <MessageList />
+          </div>
+        
       </>
     );
   }

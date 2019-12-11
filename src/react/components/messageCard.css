@@ -1,0 +1,46 @@
+#messageCard-card {
+  display: flex;
+  width: 60%;
+  border: 1px solid var(--kenzieBlue);
+  border-radius: 5px;
+}
+
+#messageCard-card h3 {
+  color: var(--kenzieBlue);
+  font-size: 18px;
+}
+
+#messageCard-card h3:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#messageCard-pic {
+  display: flex;
+  margin: 10px;
+}
+
+#messageCard-space {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#messageCard-space p {
+  color: rgb(170, 170, 170);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+#messageCard-buttons {
+  border-top: 1px solid var(--kenzieBlue);
+  padding: 5px;
+}
+
+#messageCard-profilePic {
+  height: 75px;
+  width: 75px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}

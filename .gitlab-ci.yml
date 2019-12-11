@@ -13,4 +13,4 @@ pages:
   only:
     - master
 variables:
-  PUBLIC_URL: "/se/fe/final-projects/assessment---kwitter-frontend"
+  PUBLIC_URL: "/assessment---kwitter-frontend"

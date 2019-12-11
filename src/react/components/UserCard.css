@@ -1,0 +1,65 @@
+#userCard-space {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 5px;
+  height: 100%;
+}
+
+.modal-content {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.modal-content form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  border: 2px solid var(--kenzieBlue);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.modal-content p {
+  text-align: center;
+  color: rgb(100, 100, 100);
+}
+
+#confirmDelete-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+#aboutMe-chars {
+  color: rgb(100, 100, 100);
+}
+
+#aboutMe-submit {
+  background-color: var(--kenzieBlue);
+  color: var(--kenzieGreen);
+  border: 2px solid var(--kenzieGreen);
+  border-radius: 5px;
+  font-family: var(--defaultFont);
+  font-size: 18px;
+}
+
+#userCard-profilePic {
+  height: 300px;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--kenzieBlue);
+  border-radius: 50%;
+}
+
+#pictureUpload-error {
+  color: red;
+  text-align: center;
+}
