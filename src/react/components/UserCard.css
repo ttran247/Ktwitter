@@ -27,6 +27,11 @@
   padding: 20px;
 }
 
+.modal-content p {
+  text-align: center;
+  color: rgb(100, 100, 100);
+}
+
 #confirmDelete-buttons {
   display: flex;
   justify-content: space-around;
@@ -52,4 +57,9 @@
   background-position: center;
   border: 3px solid var(--kenzieBlue);
   border-radius: 50%;
+}
+
+#pictureUpload-error {
+  color: red;
+  text-align: center;
 }

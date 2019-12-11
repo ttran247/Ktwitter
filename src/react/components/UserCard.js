@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Popup, Dropdown, Modal } from "semantic-ui-react";
+import { Card, Popup, Dropdown, Modal } from "semantic-ui-react";
 import { Button } from "semantic-ui-react";
 import {
   changePicture,
@@ -49,8 +49,17 @@ class UserCard extends React.Component {
 
   newPicture = event => {
     event.preventDefault();
-    this.props.changePicture(event.target);
-    this.closeModal();
+    this.setState({ error: "" });
+    const maxSize = 200 * 1000; // 200kb
+    if (document.getElementsByName("picture")[0].files[0].size <= maxSize) {
+      this.props.changePicture(event.target);
+      this.closeModal();
+    } else {
+      this.setState({
+        error:
+          "Your picture is more than 200kb in size. Please choose another one."
+      });
+    }
   };
 
   newAbout = () => {
@@ -76,7 +85,7 @@ class UserCard extends React.Component {
   render() {
     let aboutMeChars = this.state.inputValue.length;
 
-    const { user, modalStatus } = this.state;
+    const { user, modalStatus, error } = this.state;
     const authenticatedUsersProfile = this.props.currentUser === user.username;
     return (
       <div id="userCard-space">
@@ -180,6 +189,10 @@ class UserCard extends React.Component {
                 >
                   {modalStatus === "picture" ? (
                     <div className="modal-content">
+                      <p>
+                        Upload a new profile picture below. Keep in mind that
+                        images must be less than 200kb in size.
+                      </p>
                       <form onSubmit={this.newPicture}>
                         <input type="file" name="picture" />
                         <input
@@ -188,6 +201,7 @@ class UserCard extends React.Component {
                           value="Upload Picture"
                         />
                       </form>
+                      {error && <div id="pictureUpload-error">{error}</div>}
                     </div>
                   ) : modalStatus === "about" ? (
                     <div className="modal-content">
